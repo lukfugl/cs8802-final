@@ -10,9 +10,13 @@ build/Environment.o: src/Environment.cc src/Environment.h
 build/ForwardSensor.o: src/ForwardSensor.cc src/ForwardSensor.h src/Environment.h
 	g++ -o build/ForwardSensor.o -c src/ForwardSensor.cc
 
-test: test/build/Environment test/build/ForwardSensor
+build/BioSensor.o: src/BioSensor.cc src/BioSensor.h src/Environment.h
+	g++ -o build/BioSensor.o -c src/BioSensor.cc
+
+test: test/build/Environment test/build/ForwardSensor test/build/BioSensor
 	test/build/Environment
 	test/build/ForwardSensor
+	test/build/BioSensor
 
 test/build/Environment: test/Environment.cc src/Environment.h build/Environment.o
 	g++ -o test/build/Environment test/Environment.cc build/Environment.o
@@ -20,5 +24,8 @@ test/build/Environment: test/Environment.cc src/Environment.h build/Environment.
 test/build/ForwardSensor: test/ForwardSensor.cc src/Environment.h build/Environment.o build/ForwardSensor.o
 	g++ -o test/build/ForwardSensor test/ForwardSensor.cc build/Environment.o build/ForwardSensor.o
 
+test/build/BioSensor: test/BioSensor.cc src/Environment.h build/Environment.o build/BioSensor.o
+	g++ -o test/build/BioSensor test/BioSensor.cc build/Environment.o build/BioSensor.o
+
 clean:
-	rm -f build/* test/build/* test/runner bond
+	rm -f build/* test/build/* bond

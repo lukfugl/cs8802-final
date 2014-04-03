@@ -1,0 +1,17 @@
+#include "Environment.h"
+#include "NoiseModel.h"
+
+using namespace std;
+
+class BioSensor {
+  public:
+  BioSensor(shared_ptr<Environment> environment);
+  ~BioSensor();
+
+  unsigned int sense(double at[3], double *readings, unsigned int maxReadings);
+  void setNoiseModel(shared_ptr<NoiseModel> noiseModel);
+
+  private:
+  shared_ptr<Environment> mEnvironment;
+  shared_ptr<NoiseModel> mNoiseModel;
+};

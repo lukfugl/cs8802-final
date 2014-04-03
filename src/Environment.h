@@ -13,11 +13,15 @@ class Environment {
   ~Environment();
 
   unsigned int spawnObject(double x, double y);
+  unsigned int spawnGuard(double x, double y);
   unsigned int centerCount();
+  unsigned int guardCount();
   Coordinate getCenter(int index);
+  Coordinate getGuard(int index);
 
   private:
   std::vector<Coordinate> mCenters;
+  std::vector<Coordinate> mGuards;
 };
 
 #endif
