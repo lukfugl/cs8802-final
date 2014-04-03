@@ -5,9 +5,8 @@ const unsigned int ForwardSensor::GRANULARITY = 10;
 const double ForwardSensor::NONE = -1.0;
 
 ForwardSensor::ForwardSensor(shared_ptr<Environment> environment) :
-  mEnvironment(environment) {
-  mNoiseModel = shared_ptr<NoiseModel>(new NoiseModel);
-}
+  mEnvironment(environment),
+  mNoiseModel(new NoiseModel) {}
 
 ForwardSensor::~ForwardSensor() {}
 

@@ -1,8 +1,10 @@
 #include "BioSensor.h"
 #include <math.h>
 
-BioSensor::BioSensor(shared_ptr<Environment> environment)
-  : mEnvironment(environment) {}
+BioSensor::BioSensor(shared_ptr<Environment> environment) :
+  mEnvironment(environment),
+  mDistanceNoiseModel(new NoiseModel),
+  mHeadingNoiseModel(new NoiseModel) {}
 
 BioSensor::~BioSensor() {}
 
@@ -13,12 +15,18 @@ unsigned int BioSensor::sense(double at[3], double *readings, unsigned int maxRe
     Environment::Coordinate guard = mEnvironment->getGuard(i);
     double dx = guard.first;
     double dy = guard.second;
-    readings[2*i] = sqrt(dx * dx + dy * dy);
-    readings[2*i+1] = atan2(dx, dy);
+    readings[2*i] = mDistanceNoiseModel->noisyValue(sqrt(dx * dx + dy * dy));
+    readings[2*i+1] = mHeadingNoiseModel->noisyValue(atan2(dy, dx));
+    if (readings[2*i+1] < 0)
+      readings[2*i+1] += 2 * M_PI;
   }
   return guardCount;
 }
 
-void BioSensor::setNoiseModel(shared_ptr<NoiseModel> noiseModel) {
-  mNoiseModel = noiseModel;
+void BioSensor::setDistanceNoiseModel(shared_ptr<NoiseModel> noiseModel) {
+  mDistanceNoiseModel = noiseModel;
+}
+
+void BioSensor::setHeadingNoiseModel(shared_ptr<NoiseModel> noiseModel) {
+  mHeadingNoiseModel = noiseModel;
 }

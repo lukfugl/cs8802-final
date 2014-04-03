@@ -1,11 +1,7 @@
 #include "../src/Environment.h"
 #include "../src/ForwardSensor.h"
-#include "../src/NoiseModel.h"
+#include "ConstantNoise.h"
 #include <math.h>
-
-class ConstantNoise : public NoiseModel {
-  double noisyValue(double value) { return value + 0.5; }
-};
 
 int main(int argc, char **argv) {
   shared_ptr<Environment> env(new Environment);
@@ -142,7 +138,7 @@ int main(int argc, char **argv) {
   }
 
   // back to simple viewing, but noisy (but constant noise for testing)
-  sensor.setNoiseModel(shared_ptr<NoiseModel>(new ConstantNoise));
+  sensor.setNoiseModel(shared_ptr<NoiseModel>(new ConstantNoise(0.5)));
 
   at[0] = 0.0;
   at[1] = 0.0;
