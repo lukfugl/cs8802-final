@@ -4,24 +4,27 @@
 #include <string>
 #include <vector>
 
+using namespace std;
+
 class Environment {
   public:
-  typedef std::pair<double, double> Coordinate;
+  typedef pair<double, double> Coordinate;
 
   Environment();
-  Environment(std::string filename);
   ~Environment();
 
+  void loadMap(string filename);
   unsigned int spawnObject(double x, double y);
   unsigned int spawnGuard(double x, double y);
+
   unsigned int centerCount();
   unsigned int guardCount();
   Coordinate getCenter(int index);
   Coordinate getGuard(int index);
 
   private:
-  std::vector<Coordinate> mCenters;
-  std::vector<Coordinate> mGuards;
+  vector<Coordinate> mCenters;
+  vector<Coordinate> mGuards;
 };
 
 #endif
