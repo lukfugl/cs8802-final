@@ -1,11 +1,11 @@
-# Escape!
+# Infiltration!
 
 ### Problem Statement
 
-A mark 007 "Bond" autonomous infiltration robot finds itself activated
-at a random (and unknown) location in one of three (also random and
-unknown to the robot) drop zones. It needs to make its way to a target
-zone, undetected.
+A prototype (version 0.0.7) "Bond" autonomous infiltration robot finds
+itself activated at a random (and unknown) location in one of three
+(also random and unknown to the robot) drop zones. It needs to make its
+way to a target zone, undetected.
 
 To reach the target zone, Bond must navigate a number of large
 obstacles. It has a rough, but inexact, map of these obstacles. Bond's
