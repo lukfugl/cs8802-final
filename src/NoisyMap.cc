@@ -23,8 +23,8 @@ NoisyMap::NoisyMap(shared_ptr<Environment> environment, shared_ptr<NoiseModel> n
   mTargetZone.maxX = mNoise->noisyValue(sourceTargetZone.maxX);
   mTargetZone.maxY = mNoise->noisyValue(sourceTargetZone.maxY);
 
-  for (int i = 0; i < mEnvironment->centerCount(); i++) {
-    Coordinate obstacle = mEnvironment->getCenter(i);
+  for (int i = 0; i < mEnvironment->obstacleCount(); i++) {
+    Coordinate obstacle = mEnvironment->getObstacle(i);
     double x = mNoise->noisyValue(obstacle.x);
     double y = mNoise->noisyValue(obstacle.y);
     mObstacles.push_back(Coordinate(x, y));

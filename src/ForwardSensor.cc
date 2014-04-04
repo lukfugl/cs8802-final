@@ -19,10 +19,10 @@ void ForwardSensor::sense(double at[3], double *reading) {
   for (int i = 0; i < GRANULARITY; i++)
     reading[i] = NONE;
 
-  for (int j = 0; j < mEnvironment->centerCount(); j++) {
-    Coordinate center = mEnvironment->getCenter(j);
-    double cx = center.x;
-    double cy = center.y;
+  for (int j = 0; j < mEnvironment->obstacleCount(); j++) {
+    Coordinate obstacle = mEnvironment->getObstacle(j);
+    double cx = obstacle.x;
+    double cy = obstacle.y;
     double rx = cx - at[0];
     double ry = cy - at[1];
     double cor = rx * rx + ry * ry - r * r;

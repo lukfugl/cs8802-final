@@ -22,12 +22,12 @@ class Environment {
   unsigned int spawnGuard(double x, double y, double h);
 
   unsigned int dropZoneCount();
-  unsigned int centerCount();
+  unsigned int obstacleCount();
   unsigned int guardCount();
 
   DropZone getDropZone(int index);
   DropZone getTargetZone();
-  Coordinate getCenter(int index);
+  Coordinate getObstacle(int index);
   Guard getGuard(int index);
   double getGuardSpeedMean();
   double getGuardSpeedSigma();
@@ -38,7 +38,7 @@ class Environment {
   double getBioHeadingSigma();
 
   private:
-  vector<Coordinate> mCenters;
+  vector<Coordinate> mObstacles;
   vector<Guard> mGuards;
   vector<DropZone> mDropZones;
   DropZone mTargetZone;

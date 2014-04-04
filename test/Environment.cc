@@ -47,8 +47,8 @@ int main(int argc, char **argv) {
   }
 
   // loads obstacles
-  if (env.centerCount() != 2) {
-    printf("\texpected 2 obstacles, got %d\n", env.centerCount());
+  if (env.obstacleCount() != 2) {
+    printf("\texpected 2 obstacles, got %d\n", env.obstacleCount());
   }
 
   expected[0] = 50;
@@ -56,10 +56,10 @@ int main(int argc, char **argv) {
   expected[2] = 30;
   expected[3] = 60;
 
-  for (int i = 0; i < env.centerCount(); i++) {
-    Coordinate center = env.getCenter(i);
-    if (expected[2*i] != center.x || expected[2*i+1] != center.y) {
-      printf("\texpected <%f, %f> at %d obstacles, got <%f, %f>\n", expected[2*i], expected[2*i+1], i, center.x, center.y);
+  for (int i = 0; i < env.obstacleCount(); i++) {
+    Coordinate obstacle = env.getObstacle(i);
+    if (expected[2*i] != obstacle.x || expected[2*i+1] != obstacle.y) {
+      printf("\texpected <%f, %f> at %d obstacles, got <%f, %f>\n", expected[2*i], expected[2*i+1], i, obstacle.x, obstacle.y);
     }
   }
 

@@ -86,7 +86,7 @@ unsigned int Environment::spawnTargetZone(double minX, double minY, double maxX,
 }
 
 unsigned int Environment::spawnObject(double x, double y) {
-  mCenters.push_back(Coordinate(x, y));
+  mObstacles.push_back(Coordinate(x, y));
   return 0;
 }
 
@@ -99,8 +99,8 @@ unsigned int Environment::dropZoneCount() {
   return mDropZones.size();
 }
 
-unsigned int Environment::centerCount() {
-  return mCenters.size();
+unsigned int Environment::obstacleCount() {
+  return mObstacles.size();
 }
 
 unsigned int Environment::guardCount() {
@@ -115,8 +115,8 @@ DropZone Environment::getTargetZone() {
   return mTargetZone;
 }
 
-Coordinate Environment::getCenter(int index) {
-  return mCenters.at(index);
+Coordinate Environment::getObstacle(int index) {
+  return mObstacles.at(index);
 }
 
 Guard Environment::getGuard(int index) {
