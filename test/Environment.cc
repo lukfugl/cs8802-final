@@ -57,9 +57,9 @@ int main(int argc, char **argv) {
   expected[3] = 60;
 
   for (int i = 0; i < env.centerCount(); i++) {
-    Environment::Coordinate center = env.getCenter(i);
-    if (expected[2*i] != center.first || expected[2*i+1] != center.second) {
-      printf("\texpected <%f, %f> at %d obstacles, got <%f, %f>\n", expected[2*i], expected[2*i+1], i, center.first, center.second);
+    Coordinate center = env.getCenter(i);
+    if (expected[2*i] != center.x || expected[2*i+1] != center.y) {
+      printf("\texpected <%f, %f> at %d obstacles, got <%f, %f>\n", expected[2*i], expected[2*i+1], i, center.x, center.y);
     }
   }
 
@@ -77,12 +77,12 @@ int main(int argc, char **argv) {
   }
 
   for (int i = 0; i < env.guardCount(); i++) {
-    Environment::Guard guard = env.getGuard(i);
-    Environment::Coordinate location = guard.first;
-    if (expected[3*i] != location.first || expected[3*i+1] != location.second || expected[3*i+2] != guard.second) {
+    Guard guard = env.getGuard(i);
+    Coordinate location = guard.location;
+    if (expected[3*i] != location.x || expected[3*i+1] != location.y || expected[3*i+2] != guard.heading) {
       printf("\texpected <%f, %f, %f> at %d obstacles, got <%f, %f, %f>\n",
         expected[3*i], expected[3*i+1], expected[3*i+2], i,
-        location.first, location.second, guard.second);
+        location.x, location.y, guard.heading);
     }
   }
 

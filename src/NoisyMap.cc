@@ -24,10 +24,10 @@ NoisyMap::NoisyMap(shared_ptr<Environment> environment, shared_ptr<NoiseModel> n
   mTargetZone.maxY = mNoise->noisyValue(sourceTargetZone.maxY);
 
   for (int i = 0; i < mEnvironment->centerCount(); i++) {
-    Environment::Coordinate obstacle = mEnvironment->getCenter(i);
-    double x = mNoise->noisyValue(obstacle.first);
-    double y = mNoise->noisyValue(obstacle.second);
-    mObstacles.push_back(Environment::Coordinate(x, y));
+    Coordinate obstacle = mEnvironment->getCenter(i);
+    double x = mNoise->noisyValue(obstacle.x);
+    double y = mNoise->noisyValue(obstacle.y);
+    mObstacles.push_back(Coordinate(x, y));
   }
 }
 
@@ -47,6 +47,6 @@ DropZone NoisyMap::getTargetZone() {
   return mTargetZone;
 }
 
-Environment::Coordinate NoisyMap::getObstacle(unsigned int index) {
+Coordinate NoisyMap::getObstacle(unsigned int index) {
   return mObstacles.at(index);
 }

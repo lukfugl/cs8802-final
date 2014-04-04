@@ -2,6 +2,8 @@
 #define __ENVIRONMENT_H
 
 #include "DropZone.h"
+#include "Coordinate.h"
+#include "Guard.h"
 
 #include <string>
 #include <vector>
@@ -10,9 +12,6 @@ using namespace std;
 
 class Environment {
   public:
-  typedef pair<double, double> Coordinate;
-  typedef pair<Coordinate, double> Guard;
-
   Environment();
   ~Environment();
 

@@ -1,19 +1,19 @@
 all: build/main.o build/Environment.o
-	g++ -o bond build/main.o build/Environment.o
+	g++ -o bond build/main.o build/Environment.o vendor/jsoncpp/lib/json_writer.o vendor/jsoncpp/lib/json_reader.o vendor/jsoncpp/lib/json_value.o
 
 build/main.o: src/main.cc
 	g++ -o build/main.o -c src/main.cc
 
-build/Environment.o: src/Environment.cc src/Environment.h
+build/Environment.o: src/Environment.cc src/Environment.h src/Coordinate.h src/Guard.h
 	g++ -o build/Environment.o -c src/Environment.cc
 
-build/ForwardSensor.o: src/ForwardSensor.cc src/ForwardSensor.h src/Environment.h
+build/ForwardSensor.o: src/ForwardSensor.cc src/ForwardSensor.h src/Environment.h src/Coordinate.h
 	g++ -o build/ForwardSensor.o -c src/ForwardSensor.cc
 
-build/BioSensor.o: src/BioSensor.cc src/BioSensor.h src/Environment.h
+build/BioSensor.o: src/BioSensor.cc src/BioSensor.h src/Environment.h src/Coordinate.h src/Guard.h
 	g++ -o build/BioSensor.o -c src/BioSensor.cc
 
-build/NoisyMap.o: src/NoisyMap.cc src/NoisyMap.h src/Environment.h
+build/NoisyMap.o: src/NoisyMap.cc src/NoisyMap.h src/Environment.h src/Coordinate.h
 	g++ -o build/NoisyMap.o -c src/NoisyMap.cc
 
 test: test/build/Environment test/build/ForwardSensor test/build/BioSensor test/build/NoisyMap

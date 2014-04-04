@@ -12,9 +12,9 @@ unsigned int BioSensor::sense(double at[3], double *readings, unsigned int maxRe
   unsigned int guardCount = mEnvironment->guardCount();
   if (guardCount > maxReadings) guardCount = maxReadings;
   for (int i = 0; i < guardCount; i++) {
-    Environment::Coordinate guard = mEnvironment->getGuard(i).first;
-    double dx = guard.first;
-    double dy = guard.second;
+    Coordinate location = mEnvironment->getGuard(i).location;
+    double dx = location.x;
+    double dy = location.y;
     readings[2*i] = mDistanceNoiseModel->noisyValue(sqrt(dx * dx + dy * dy));
     readings[2*i+1] = mHeadingNoiseModel->noisyValue(atan2(dy, dx));
     if (readings[2*i+1] < 0)

@@ -115,11 +115,11 @@ DropZone Environment::getTargetZone() {
   return mTargetZone;
 }
 
-Environment::Coordinate Environment::getCenter(int index) {
+Coordinate Environment::getCenter(int index) {
   return mCenters.at(index);
 }
 
-Environment::Guard Environment::getGuard(int index) {
+Guard Environment::getGuard(int index) {
   return mGuards.at(index);
 }
 

@@ -20,9 +20,9 @@ void ForwardSensor::sense(double at[3], double *reading) {
     reading[i] = NONE;
 
   for (int j = 0; j < mEnvironment->centerCount(); j++) {
-    Environment::Coordinate center = mEnvironment->getCenter(j);
-    double cx = center.first;
-    double cy = center.second;
+    Coordinate center = mEnvironment->getCenter(j);
+    double cx = center.x;
+    double cy = center.y;
     double rx = cx - at[0];
     double ry = cy - at[1];
     double cor = rx * rx + ry * ry - r * r;

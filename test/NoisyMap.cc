@@ -69,21 +69,21 @@ int main(int argc, char **argv) {
   expected[3] = 31.2;
 
   for (int i = 0; i < obstacleCount; i++) {
-    Environment::Coordinate obstacle = map.getObstacle(i);
-    if (fabs(obstacle.first - expected[2*i]) > 0.000001 ||
-        fabs(obstacle.second - expected[2*i+1]) > 0.000001) {
+    Coordinate obstacle = map.getObstacle(i);
+    if (fabs(obstacle.x - expected[2*i]) > 0.000001 ||
+        fabs(obstacle.y - expected[2*i+1]) > 0.000001) {
       printf("\texpected obstacle <%.8f, %.8f> at %d, got <%.8f, %.8f>\n",
-        expected[2*i], expected[2*i+1], i, obstacle.first, obstacle.second);
+        expected[2*i], expected[2*i+1], i, obstacle.x, obstacle.y);
     }
   }
 
   // should reuse the same noise for the same values
   for (int i = 0; i < obstacleCount; i++) {
-    Environment::Coordinate obstacle = map.getObstacle(i);
-    if (fabs(obstacle.first - expected[2*i]) > 0.000001 ||
-        fabs(obstacle.second - expected[2*i+1]) > 0.000001) {
+    Coordinate obstacle = map.getObstacle(i);
+    if (fabs(obstacle.x - expected[2*i]) > 0.000001 ||
+        fabs(obstacle.y - expected[2*i+1]) > 0.000001) {
       printf("\tstill expected obstacle <%.8f, %.8f> at %d, got <%.8f, %.8f>\n",
-        expected[2*i], expected[2*i+1], i, obstacle.first, obstacle.second);
+        expected[2*i], expected[2*i+1], i, obstacle.x, obstacle.y);
     }
   }
 
