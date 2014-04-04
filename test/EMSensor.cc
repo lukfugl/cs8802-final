@@ -1,11 +1,11 @@
 #include "../src/Environment.h"
-#include "../src/BioSensor.h"
+#include "../src/EMSensor.h"
 #include "ConstantNoise.h"
 #include <math.h>
 
 int main(int argc, char **argv) {
   shared_ptr<Environment> env(new Environment);
-  BioSensor sensor(env);
+  EMSensor sensor(env);
 
   double at[3] = { 0.0, 0.0, 0.0 };
   double readings[16];

@@ -81,8 +81,8 @@ void Environment::loadMap(string filename) {
     const Json::Value informationNoise = root["informationNoise"];
     mMapSigma = informationNoise.get("mapSigma", 0).asDouble();
     mForwardSigma = informationNoise.get("forwardSigma", 0).asDouble();
-    mBioRangeSigma = informationNoise.get("bioRangeSigma", 0).asDouble();
-    mBioHeadingSigma = informationNoise.get("bioHeadingSigma", 0).asDouble();
+    mEMRangeSigma = informationNoise.get("emRangeSigma", 0).asDouble();
+    mEMHeadingSigma = informationNoise.get("emHeadingSigma", 0).asDouble();
   }
 }
 
@@ -169,10 +169,10 @@ double Environment::getForwardSigma() {
   return mForwardSigma;
 }
 
-double Environment::getBioRangeSigma() {
-  return mBioRangeSigma;
+double Environment::getEMRangeSigma() {
+  return mEMRangeSigma;
 }
 
-double Environment::getBioHeadingSigma() {
-  return mBioHeadingSigma;
+double Environment::getEMHeadingSigma() {
+  return mEMHeadingSigma;
 }

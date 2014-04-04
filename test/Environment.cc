@@ -118,12 +118,12 @@ int main(int argc, char **argv) {
 
   double mapSigma = env.getMapSigma();
   double forwardSigma = env.getForwardSigma();
-  double bioRangeSigma = env.getBioRangeSigma();
-  double bioHeadingSigma = env.getBioHeadingSigma();
-  if (expected[0] != mapSigma || expected[1] != forwardSigma || expected[2] != bioRangeSigma || expected[3] != bioHeadingSigma) {
+  double emRangeSigma = env.getEMRangeSigma();
+  double emHeadingSigma = env.getEMHeadingSigma();
+  if (expected[0] != mapSigma || expected[1] != forwardSigma || expected[2] != emRangeSigma || expected[3] != emHeadingSigma) {
     printf("\texpected noise parameters <%f, %f, %f, %f>, got <%f, %f, %f, %f>\n",
         expected[0], expected[1], expected[2], expected[3],
-        mapSigma, forwardSigma, bioRangeSigma, bioHeadingSigma);
+        mapSigma, forwardSigma, emRangeSigma, emHeadingSigma);
   }
 
   return 0;

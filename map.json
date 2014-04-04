@@ -51,7 +51,7 @@
   "informationNoise": {
     "mapSigma": 5, // noise in map
     "forwardSigma": 2, // noise in forward range finder
-    "bioRangeSigma": 2, // noise in bio-sensor range
-    "bioHeadingSigma": 0.2 // noise in bio-sensor heading
+    "emRangeSigma": 2, // noise in EM-sensor range
+    "emHeadingSigma": 0.2 // noise in EM-sensor heading
   }
 }

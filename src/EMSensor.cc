@@ -1,14 +1,14 @@
-#include "BioSensor.h"
+#include "EMSensor.h"
 #include <math.h>
 
-BioSensor::BioSensor(shared_ptr<Environment> environment) :
+EMSensor::EMSensor(shared_ptr<Environment> environment) :
   mEnvironment(environment),
   mDistanceNoiseModel(new NoiseModel),
   mHeadingNoiseModel(new NoiseModel) {}
 
-BioSensor::~BioSensor() {}
+EMSensor::~EMSensor() {}
 
-unsigned int BioSensor::sense(double at[3], double *readings, unsigned int maxReadings) {
+unsigned int EMSensor::sense(double at[3], double *readings, unsigned int maxReadings) {
   unsigned int guardCount = mEnvironment->guardCount();
   if (guardCount > maxReadings) guardCount = maxReadings;
   for (int i = 0; i < guardCount; i++) {
@@ -23,10 +23,10 @@ unsigned int BioSensor::sense(double at[3], double *readings, unsigned int maxRe
   return guardCount;
 }
 
-void BioSensor::setDistanceNoiseModel(shared_ptr<NoiseModel> noiseModel) {
+void EMSensor::setDistanceNoiseModel(shared_ptr<NoiseModel> noiseModel) {
   mDistanceNoiseModel = noiseModel;
 }
 
-void BioSensor::setHeadingNoiseModel(shared_ptr<NoiseModel> noiseModel) {
+void EMSensor::setHeadingNoiseModel(shared_ptr<NoiseModel> noiseModel) {
   mHeadingNoiseModel = noiseModel;
 }

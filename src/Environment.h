@@ -35,8 +35,8 @@ class Environment {
   double getGuardTurningMean();
   double getMapSigma();
   double getForwardSigma();
-  double getBioRangeSigma();
-  double getBioHeadingSigma();
+  double getEMRangeSigma();
+  double getEMHeadingSigma();
 
   private:
   vector<shared_ptr<Obstacle> > mObstacles;
@@ -49,8 +49,8 @@ class Environment {
   double mGuardTurningSigma;
   double mMapSigma;
   double mForwardSigma;
-  double mBioRangeSigma;
-  double mBioHeadingSigma;
+  double mEMRangeSigma;
+  double mEMHeadingSigma;
 };
 
 #endif

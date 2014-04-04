@@ -3,10 +3,10 @@
 
 using namespace std;
 
-class BioSensor {
+class EMSensor {
   public:
-  BioSensor(shared_ptr<Environment> environment);
-  ~BioSensor();
+  EMSensor(shared_ptr<Environment> environment);
+  ~EMSensor();
 
   unsigned int sense(double at[3], double *readings, unsigned int maxReadings);
   void setDistanceNoiseModel(shared_ptr<NoiseModel> noiseModel);
