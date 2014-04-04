@@ -86,18 +86,28 @@ int main(int argc, char **argv) {
     }
   }
 
+  if (!env.getGuard(0).ccw) {
+    printf("\texpected first guard to be ccw, was not\n");
+  }
+
+  if (env.getGuard(1).ccw) {
+    printf("\texpected second guard not to be ccw, was\n");
+  }
+
   // loads guard behavior
   expected[0] = 5;
   expected[1] = 0.2;
-  expected[2] = 0.1;
+  expected[2] = 0.3;
+  expected[3] = 0.05;
 
   double guardSpeedMean = env.getGuardSpeedMean();
   double guardSpeedSigma = env.getGuardSpeedSigma();
+  double guardTurningMean = env.getGuardTurningMean();
   double guardTurningSigma = env.getGuardTurningSigma();
-  if (expected[0] != guardSpeedMean || expected[1] != guardSpeedSigma || expected[2] != guardTurningSigma) {
-    printf("\texpected guard parameters <%f, %f, %f>, got <%f, %f, %f>\n",
-        expected[0], expected[1], expected[2],
-        guardSpeedMean, guardSpeedSigma, guardTurningSigma);
+  if (expected[0] != guardSpeedMean || expected[1] != guardSpeedSigma || expected[2] != guardTurningMean || expected[3] != guardTurningSigma) {
+    printf("\texpected guard parameters <%f, %f, %f, %f>, got <%f, %f, %f, %f>\n",
+        expected[0], expected[1], expected[2], expected[3],
+        guardSpeedMean, guardSpeedSigma, guardTurningMean, guardTurningSigma);
   }
 
   // loads noise parameters

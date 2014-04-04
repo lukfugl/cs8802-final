@@ -19,7 +19,7 @@ class Environment {
   unsigned int spawnDropZone(double minX, double minY, double maxX, double maxY);
   unsigned int spawnTargetZone(double minX, double minY, double maxX, double maxY);
   unsigned int spawnObject(double x, double y);
-  unsigned int spawnGuard(double x, double y, double h);
+  unsigned int spawnGuard(double x, double y, double h, bool ccw=false);
 
   unsigned int dropZoneCount();
   unsigned int obstacleCount();
@@ -32,6 +32,7 @@ class Environment {
   double getGuardSpeedMean();
   double getGuardSpeedSigma();
   double getGuardTurningSigma();
+  double getGuardTurningMean();
   double getMapSigma();
   double getForwardSigma();
   double getBioRangeSigma();
@@ -44,6 +45,7 @@ class Environment {
   DropZone mTargetZone;
   double mGuardSpeedMean;
   double mGuardSpeedSigma;
+  double mGuardTurningMean;
   double mGuardTurningSigma;
   double mMapSigma;
   double mForwardSigma;

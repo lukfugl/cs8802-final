@@ -15,8 +15,8 @@
 
   // initial guard locations and headings
   "guards": [
-    { "x": 40, "y": 70, "heading": 4.71 },
-    { "x": 20, "y": 30, "heading": 2.09 }
+    { "x": 40, "y": 70, "heading": 4.71, "ccw": true },
+    { "x": 20, "y": 30, "heading": 2.09, "ccw": false }
   ],
 
   // parameters for guard behavior
@@ -27,8 +27,11 @@
     // sigma of distance covered (assuming no obstacle) in each time step
     "speedSigma": 0.2,
 
-    // sigma for 0-mean normal distribution of angle turned in each time step
-    "turningSigma": 0.1
+    // mean of angle turned in each time step
+    "turningMean": 0.3,
+
+    // sigma of angle turned in each time step
+    "turningSigma": 0.05
   },
 
   // sigmas for 0-mean noise distributions for robot information (map and

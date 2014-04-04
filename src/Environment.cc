@@ -48,13 +48,15 @@ void Environment::loadMap(string filename) {
     double x = guards[i].get("x", 0).asDouble();
     double y = guards[i].get("y", 0).asDouble();
     double h = guards[i].get("heading", 0).asDouble();
-    spawnGuard(x, y, h);
+    bool ccw = guards[i].get("ccw", true).asBool();
+    spawnGuard(x, y, h, ccw);
   }
 
   if (root.isMember("guardBehavior")) {
     const Json::Value guardBehavior = root["guardBehavior"];
     mGuardSpeedMean = guardBehavior.get("speedMean", 5).asDouble();
     mGuardSpeedSigma = guardBehavior.get("speedSigma", 0).asDouble();
+    mGuardTurningMean = guardBehavior.get("turningMean", 0).asDouble();
     mGuardTurningSigma = guardBehavior.get("turningSigma", 0).asDouble();
   }
 
@@ -90,8 +92,8 @@ unsigned int Environment::spawnObject(double x, double y) {
   return 0;
 }
 
-unsigned int Environment::spawnGuard(double x, double y, double h) {
-  mGuards.push_back(Guard(Coordinate(x, y), h));
+unsigned int Environment::spawnGuard(double x, double y, double h, bool ccw) {
+  mGuards.push_back(Guard(Coordinate(x, y), h, ccw));
   return 0;
 }
 
@@ -129,6 +131,10 @@ double Environment::getGuardSpeedMean() {
 
 double Environment::getGuardSpeedSigma() {
   return mGuardSpeedSigma;
+}
+
+double Environment::getGuardTurningMean() {
+  return mGuardTurningMean;
 }
 
 double Environment::getGuardTurningSigma() {

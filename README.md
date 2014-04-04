@@ -12,14 +12,17 @@ has a rough, but inexact, map of these obstacles. Bond's primary sensor
 measures the range to any solid matter in a 90 degree arc in front of the
 robot, allowing it to observe these obstacles.
 
-In addition to the stationary obstacles, a number of guards slowly patrol the
-area. If they spot Bond, he is captured and fails. Their paths are fixed and
-regular, but unknown to Bond.
+In addition to the stationary obstacles, a number of quadcopter guards
+slowly patrol the area. If they spot Bond, it is captured and fails.
+Their paths are unknown to Bond, but are at least "smooth" (no sudden
+sharp turns or accelerations). Their motion and sight are not restricted
+by obstacles.
 
-Fortunately, this was anticipated and Bond has been equipped with a special
-long range sensor that can detect range and direction to bioelectric readings
-regardless of material (e.g. the obstacles) in between. The guards can only
-detect Bond at much shorter range and cannot see through obstacles.
+Fortunately, this was anticipated and Bond has been equipped with a
+special long range sensor that can detect range and direction to
+bioelectric readings regardless of material (e.g. the obstacles) in
+between. The guards can only detect Bond at much shorter range, so it
+should be able to use this sensor to avoid them.
 
 ### Approach
 
