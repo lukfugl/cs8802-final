@@ -2,7 +2,7 @@
 #define __ENVIRONMENT_H
 
 #include "DropZone.h"
-#include "Coordinate.h"
+#include "Obstacle.h"
 #include "Guard.h"
 
 #include <string>
@@ -18,8 +18,8 @@ class Environment {
   void loadMap(string filename);
   unsigned int spawnDropZone(double minX, double minY, double maxX, double maxY);
   unsigned int spawnTargetZone(double minX, double minY, double maxX, double maxY);
-  unsigned int spawnObject(double x, double y);
-  unsigned int spawnGuard(double x, double y, double h, bool ccw=false);
+  unsigned int spawnObject(double x, double y, double radius);
+  shared_ptr<Guard> spawnGuard(double x, double y, double h, bool ccw=false);
 
   unsigned int dropZoneCount();
   unsigned int obstacleCount();
@@ -27,8 +27,8 @@ class Environment {
 
   DropZone getDropZone(int index);
   DropZone getTargetZone();
-  Coordinate getObstacle(int index);
-  Guard getGuard(int index);
+  shared_ptr<Obstacle> getObstacle(int index);
+  shared_ptr<Guard> getGuard(int index);
   double getGuardSpeedMean();
   double getGuardSpeedSigma();
   double getGuardTurningSigma();
@@ -39,8 +39,8 @@ class Environment {
   double getBioHeadingSigma();
 
   private:
-  vector<Coordinate> mObstacles;
-  vector<Guard> mGuards;
+  vector<shared_ptr<Obstacle> > mObstacles;
+  vector<shared_ptr<Guard> > mGuards;
   vector<DropZone> mDropZones;
   DropZone mTargetZone;
   double mGuardSpeedMean;

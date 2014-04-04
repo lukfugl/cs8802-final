@@ -20,7 +20,7 @@ int main(int argc, char **argv) {
   }
 
   // non-empty environment, should sense object
-  env->spawnObject(10.0, 0.0);
+  env->spawnObject(10.0, 0.0, 4.0);
 
   expected[0] = ForwardSensor::NONE;
   expected[1] = 8.623518165476579;
@@ -86,7 +86,7 @@ int main(int argc, char **argv) {
   }
 
   // two objects, should sense both
-  env->spawnObject(20.0, 0.0);
+  env->spawnObject(20.0, 0.0, 4.0);
 
   at[0] = 15.0;
   at[1] = 10.0;

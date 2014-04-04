@@ -10,7 +10,7 @@ class NoisyMap {
 
   DropZone getDropZone(unsigned int index);
   DropZone getTargetZone();
-  Coordinate getObstacle(unsigned int index);
+  shared_ptr<Obstacle> getObstacle(unsigned int index);
 
   private:
   shared_ptr<Environment> mEnvironment;
@@ -18,5 +18,5 @@ class NoisyMap {
 
   vector<DropZone> mDropZones;
   DropZone mTargetZone;
-  vector<Coordinate> mObstacles;
+  vector<shared_ptr<Obstacle> > mObstacles;
 };

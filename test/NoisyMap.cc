@@ -8,8 +8,8 @@ int main(int argc, char **argv) {
   shared_ptr<Environment> env(new Environment);
   env->spawnDropZone(0, 0, 5, 5);
   env->spawnTargetZone(35, 35, 40, 40);
-  env->spawnObject(10, 10);
-  env->spawnObject(20, 30);
+  env->spawnObject(10, 10, 4);
+  env->spawnObject(20, 30, 4);
   env->spawnGuard(5, 35, 0);
 
   shared_ptr<NoiseModel> noise(new DeterministicNoise);
@@ -69,21 +69,21 @@ int main(int argc, char **argv) {
   expected[3] = 31.2;
 
   for (int i = 0; i < obstacleCount; i++) {
-    Coordinate obstacle = map.getObstacle(i);
-    if (fabs(obstacle.x - expected[2*i]) > 0.000001 ||
-        fabs(obstacle.y - expected[2*i+1]) > 0.000001) {
+    shared_ptr<Obstacle> obstacle = map.getObstacle(i);
+    if (fabs(obstacle->location.x - expected[2*i]) > 0.000001 ||
+        fabs(obstacle->location.y - expected[2*i+1]) > 0.000001) {
       printf("\texpected obstacle <%.8f, %.8f> at %d, got <%.8f, %.8f>\n",
-        expected[2*i], expected[2*i+1], i, obstacle.x, obstacle.y);
+        expected[2*i], expected[2*i+1], i, obstacle->location.x, obstacle->location.y);
     }
   }
 
   // should reuse the same noise for the same values
   for (int i = 0; i < obstacleCount; i++) {
-    Coordinate obstacle = map.getObstacle(i);
-    if (fabs(obstacle.x - expected[2*i]) > 0.000001 ||
-        fabs(obstacle.y - expected[2*i+1]) > 0.000001) {
+    shared_ptr<Obstacle> obstacle = map.getObstacle(i);
+    if (fabs(obstacle->location.x - expected[2*i]) > 0.000001 ||
+        fabs(obstacle->location.y - expected[2*i+1]) > 0.000001) {
       printf("\tstill expected obstacle <%.8f, %.8f> at %d, got <%.8f, %.8f>\n",
-        expected[2*i], expected[2*i+1], i, obstacle.x, obstacle.y);
+        expected[2*i], expected[2*i+1], i, obstacle->location.x, obstacle->location.y);
     }
   }
 

@@ -13,16 +13,16 @@ ForwardSensor::~ForwardSensor() {}
 const double thetaLeft = M_PI / 6;
 const double thetaRight = -thetaLeft;
 const double thetaStep = (thetaRight - thetaLeft) / (ForwardSensor::GRANULARITY - 1);
-const double r = 4;
 
 void ForwardSensor::sense(double at[3], double *reading) {
   for (int i = 0; i < GRANULARITY; i++)
     reading[i] = NONE;
 
   for (int j = 0; j < mEnvironment->obstacleCount(); j++) {
-    Coordinate obstacle = mEnvironment->getObstacle(j);
-    double cx = obstacle.x;
-    double cy = obstacle.y;
+    shared_ptr<Obstacle> obstacle = mEnvironment->getObstacle(j);
+    double r = obstacle->radius;
+    double cx = obstacle->location.x;
+    double cy = obstacle->location.y;
     double rx = cx - at[0];
     double ry = cy - at[1];
     double cor = rx * rx + ry * ry - r * r;

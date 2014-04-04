@@ -57,9 +57,9 @@ int main(int argc, char **argv) {
   expected[3] = 60;
 
   for (int i = 0; i < env.obstacleCount(); i++) {
-    Coordinate obstacle = env.getObstacle(i);
-    if (expected[2*i] != obstacle.x || expected[2*i+1] != obstacle.y) {
-      printf("\texpected <%f, %f> at %d obstacles, got <%f, %f>\n", expected[2*i], expected[2*i+1], i, obstacle.x, obstacle.y);
+    shared_ptr<Obstacle> obstacle = env.getObstacle(i);
+    if (expected[2*i] != obstacle->location.x || expected[2*i+1] != obstacle->location.y) {
+      printf("\texpected <%f, %f> at %d obstacles, got <%f, %f>\n", expected[2*i], expected[2*i+1], i, obstacle->location.x, obstacle->location.y);
     }
   }
 
@@ -77,20 +77,20 @@ int main(int argc, char **argv) {
   }
 
   for (int i = 0; i < env.guardCount(); i++) {
-    Guard guard = env.getGuard(i);
-    Coordinate location = guard.location;
-    if (expected[3*i] != location.x || expected[3*i+1] != location.y || expected[3*i+2] != guard.heading) {
+    shared_ptr<Guard> guard = env.getGuard(i);
+    Coordinate location = guard->location;
+    if (expected[3*i] != location.x || expected[3*i+1] != location.y || expected[3*i+2] != guard->heading) {
       printf("\texpected <%f, %f, %f> at %d obstacles, got <%f, %f, %f>\n",
         expected[3*i], expected[3*i+1], expected[3*i+2], i,
-        location.x, location.y, guard.heading);
+        location.x, location.y, guard->heading);
     }
   }
 
-  if (!env.getGuard(0).ccw) {
+  if (!env.getGuard(0)->ccw) {
     printf("\texpected first guard to be ccw, was not\n");
   }
 
-  if (env.getGuard(1).ccw) {
+  if (env.getGuard(1)->ccw) {
     printf("\texpected second guard not to be ccw, was\n");
   }
 

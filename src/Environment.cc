@@ -1,6 +1,9 @@
 #include "Environment.h"
+#include "NormalNoise.h"
+
 #include <stdlib.h>
 #include <fstream>
+
 #include "../vendor/jsoncpp/include/json/json.h"
 
 using namespace std;
@@ -36,20 +39,12 @@ void Environment::loadMap(string filename) {
     spawnTargetZone(minX, minY, maxX, maxY);
   }
 
+  double obstacleRadius = root.get("obstacleRadius", 10).asDouble();
   const Json::Value obstacles = root["obstacles"];
   for (int i = 0; i < obstacles.size(); i++) {
     double x = obstacles[i].get("x", 0).asDouble();
     double y = obstacles[i].get("y", 0).asDouble();
-    spawnObject(x, y);
-  }
-
-  const Json::Value guards = root["guards"];
-  for (int i = 0; i < guards.size(); i++) {
-    double x = guards[i].get("x", 0).asDouble();
-    double y = guards[i].get("y", 0).asDouble();
-    double h = guards[i].get("heading", 0).asDouble();
-    bool ccw = guards[i].get("ccw", true).asBool();
-    spawnGuard(x, y, h, ccw);
+    spawnObject(x, y, obstacleRadius);
   }
 
   if (root.isMember("guardBehavior")) {
@@ -58,6 +53,28 @@ void Environment::loadMap(string filename) {
     mGuardSpeedSigma = guardBehavior.get("speedSigma", 0).asDouble();
     mGuardTurningMean = guardBehavior.get("turningMean", 0).asDouble();
     mGuardTurningSigma = guardBehavior.get("turningSigma", 0).asDouble();
+  }
+  else {
+    mGuardSpeedMean = 5;
+    mGuardSpeedSigma = 0;
+    mGuardTurningMean = 0;
+    mGuardTurningSigma = 0;
+  }
+
+  shared_ptr<NoiseModel> speedNoise(new NormalNoise(mGuardSpeedSigma));
+  shared_ptr<NoiseModel> turningNoise(new NormalNoise(mGuardTurningSigma));
+
+  const Json::Value guards = root["guards"];
+  for (int i = 0; i < guards.size(); i++) {
+    double x = guards[i].get("x", 0).asDouble();
+    double y = guards[i].get("y", 0).asDouble();
+    double h = guards[i].get("heading", 0).asDouble();
+    bool ccw = guards[i].get("ccw", true).asBool();
+    shared_ptr<Guard> guard = spawnGuard(x, y, h, ccw);
+    guard->setSpeedMean(mGuardSpeedMean);
+    guard->setSpeedNoiseModel(speedNoise);
+    guard->setTurningMean(mGuardTurningMean);
+    guard->setTurningNoiseModel(turningNoise);
   }
 
   if (root.isMember("informationNoise")) {
@@ -87,14 +104,17 @@ unsigned int Environment::spawnTargetZone(double minX, double minY, double maxX,
   return 0;
 }
 
-unsigned int Environment::spawnObject(double x, double y) {
-  mObstacles.push_back(Coordinate(x, y));
+unsigned int Environment::spawnObject(double x, double y, double radius) {
+  Coordinate location(x, y);
+  shared_ptr<Obstacle> obstacle(new Obstacle(location, radius));
+  mObstacles.push_back(obstacle);
   return 0;
 }
 
-unsigned int Environment::spawnGuard(double x, double y, double h, bool ccw) {
-  mGuards.push_back(Guard(Coordinate(x, y), h, ccw));
-  return 0;
+shared_ptr<Guard> Environment::spawnGuard(double x, double y, double h, bool ccw) {
+  shared_ptr<Guard> guard(new Guard(Coordinate(x, y), h, ccw));
+  mGuards.push_back(guard);
+  return guard;
 }
 
 unsigned int Environment::dropZoneCount() {
@@ -117,11 +137,11 @@ DropZone Environment::getTargetZone() {
   return mTargetZone;
 }
 
-Coordinate Environment::getObstacle(int index) {
+shared_ptr<Obstacle> Environment::getObstacle(int index) {
   return mObstacles.at(index);
 }
 
-Guard Environment::getGuard(int index) {
+shared_ptr<Guard> Environment::getGuard(int index) {
   return mGuards.at(index);
 }
 

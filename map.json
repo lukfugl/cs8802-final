@@ -1,0 +1,57 @@
+{
+  // drop zone and target zone locations (no noise in map for these)
+  "dropZones": [
+    { "minX": -92, "maxX": -82, "minY":   45, "maxY":  55 },
+    { "minX":  92, "maxX":  82, "minY":   45, "maxY":  55 },
+    { "minX":  -5, "maxX":   5, "minY": -105, "maxY": -95 }
+  ],
+  "targetZone": { "minX": -5, "maxX": 5, "minY": -5, "maxY": 5 },
+
+  // true obstacle locations. map robot receives will be noisy
+  "obstacles": [
+    { "x": -60, "y":   70 },
+    { "x":  50, "y":   60 },
+    { "x":   0, "y":   40 },
+    { "x": -40, "y":    0 },
+    { "x":  40, "y":    0 },
+    { "x": 100, "y":  -20 },
+    { "x":  90, "y":  -30 },
+    { "x":   0, "y":  -50 },
+    { "x":  60, "y":  -70 },
+    { "x":  60, "y":  -70 },
+    { "x": -40, "y": -100 }
+  ],
+  "obstacleRadius": 20,
+
+  // initial guard locations and headings
+  "guards": [
+    { "x": -30, "y":  60, "heading": 0.000000, "ccw": true  },
+    { "x":  30, "y":  40, "heading": 3.141592, "ccw": false },
+    { "x": -50, "y": -40, "heading": 0.000000, "ccw": false },
+    { "x":  40, "y": -50, "heading": 3.141592, "ccw": true  },
+  ],
+
+  // parameters for guard behavior
+  "guardBehavior": {
+    // mean of distance covered (assuming no obstacle) in each time step
+    "speedMean": 5,
+
+    // sigma of distance covered (assuming no obstacle) in each time step
+    "speedSigma": 0.2,
+
+    // mean of angle turned in each time step
+    "turningMean": 0.3,
+
+    // sigma of angle turned in each time step
+    "turningSigma": 0.05
+  },
+
+  // sigmas for 0-mean noise distributions for robot information (map and
+  // sensors)
+  "informationNoise": {
+    "mapSigma": 5, // noise in map
+    "forwardSigma": 2, // noise in forward range finder
+    "bioRangeSigma": 2, // noise in bio-sensor range
+    "bioHeadingSigma": 0.2 // noise in bio-sensor heading
+  }
+}
