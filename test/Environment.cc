@@ -2,7 +2,7 @@
 
 int main(int argc, char **argv) {
   Environment env;
-  env.loadMap("map.json");
+  env.loadMap("test/map.json");
 
   double expected[12];
 
