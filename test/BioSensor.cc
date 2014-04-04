@@ -27,7 +27,7 @@ int main(int argc, char **argv) {
   }
 
   // add guard, should sense it
-  env->spawnGuard(15.0, 15.0);
+  env->spawnGuard(15.0, 15.0, 0.0);
 
   expected[0] = sqrt(2) * 15; // distance
   expected[1] = M_PI / 4; // heading
@@ -46,7 +46,7 @@ int main(int argc, char **argv) {
   }
 
   // multiple guards, should sense both
-  env->spawnGuard(10.0, -10.0);
+  env->spawnGuard(10.0, -10.0, 0.0);
 
   expected[2] = sqrt(2) * 10; // distance
   expected[3] = 7 * M_PI / 4; // heading

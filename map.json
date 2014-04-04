@@ -21,21 +21,21 @@
 
   // parameters for guard behavior
   "guardBehavior": {
-    // sigma for 0-mean normal distribution of angle turned in each time step
-    "turningDistribution": 0.1,
-
     // mean of distance covered (assuming no obstacle) in each time step
     "speedMean": 5,
 
     // sigma of distance covered (assuming no obstacle) in each time step
-    "speedSigma": 0.2
+    "speedSigma": 0.2,
+
+    // sigma for 0-mean normal distribution of angle turned in each time step
+    "turningSigma": 0.1
   },
 
   // sigmas for 0-mean noise distributions for robot information (map and
   // sensors)
   "informationNoise": {
     "mapSigma": 5, // noise in map
-    "losSigma": 2, // noise in forward range finder
+    "forwardSigma": 2, // noise in forward range finder
     "bioRangeSigma": 2, // noise in bio-sensor range
     "bioHeadingSigma": 0.2 // noise in bio-sensor heading
   }
