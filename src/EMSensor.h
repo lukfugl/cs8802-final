@@ -1,3 +1,6 @@
+#ifndef __EM_SENSOR_H
+#define __EM_SENSOR_H
+
 #include "Environment.h"
 #include "NoiseModel.h"
 
@@ -17,3 +20,5 @@ class EMSensor {
   shared_ptr<NoiseModel> mDistanceNoiseModel;
   shared_ptr<NoiseModel> mHeadingNoiseModel;
 };
+
+#endif

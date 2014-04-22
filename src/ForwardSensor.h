@@ -1,3 +1,6 @@
+#ifndef __FORWARD_SENSOR_H
+#define __FORWARD_SENSOR_H
+
 #include "Environment.h"
 #include "NoiseModel.h"
 
@@ -18,3 +21,5 @@ class ForwardSensor {
   shared_ptr<Environment> mEnvironment;
   shared_ptr<NoiseModel> mNoiseModel;
 };
+
+#endif

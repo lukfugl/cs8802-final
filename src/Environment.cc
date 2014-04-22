@@ -1,8 +1,13 @@
 #include "Environment.h"
 #include "NormalNoise.h"
+#include "Bond.h"
+#include "NoisyMap.h"
+#include "EMSensor.h"
+#include "ForwardSensor.h"
 
 #include <stdlib.h>
 #include <fstream>
+#include <random>
 
 #include "../vendor/jsoncpp/include/json/json.h"
 
@@ -175,4 +180,33 @@ double Environment::getEMRangeSigma() {
 
 double Environment::getEMHeadingSigma() {
   return mEMHeadingSigma;
+}
+
+shared_ptr<Bond> Environment::spawnBond() {
+  default_random_engine rng;
+
+  int i = uniform_int_distribution<int>(0, dropZoneCount() - 1)(rng);
+  DropZone zone = getDropZone(i);
+
+  double x = uniform_real_distribution<double>(zone.minX, zone.maxX)(rng);
+  double y = uniform_real_distribution<double>(zone.minY, zone.maxY)(rng);
+  double h = uniform_real_distribution<double>(2 * M_PI)(rng);
+
+  shared_ptr<Environment> self(this);
+
+  shared_ptr<NoiseModel> mapNoise(new NormalNoise(mMapSigma));
+  shared_ptr<NoiseModel> forwardNoise(new NormalNoise(mForwardSigma));
+  shared_ptr<NoiseModel> emRangeNoise(new NormalNoise(mEMRangeSigma));
+  shared_ptr<NoiseModel> emHeadingNoise(new NormalNoise(mEMHeadingSigma));
+
+  shared_ptr<NoisyMap> map(new NoisyMap(self, mapNoise));
+
+  shared_ptr<EMSensor> emSensor(new EMSensor(self));
+  emSensor->setDistanceNoiseModel(emRangeNoise);
+  emSensor->setHeadingNoiseModel(emHeadingNoise);
+
+  shared_ptr<ForwardSensor> forwardSensor(new ForwardSensor(self));
+  forwardSensor->setNoiseModel(forwardNoise);
+
+  return shared_ptr<Bond>(new Bond(x, y, h, map, emSensor, forwardSensor));
 }

@@ -1,5 +1,10 @@
+#ifndef __NOISY_MAP_H
+#define __NOISY_MAP_H
+
 #include "Environment.h"
 #include "NoiseModel.h"
+
+#include <vector>
 
 class NoisyMap {
   public:
@@ -20,3 +25,5 @@ class NoisyMap {
   DropZone mTargetZone;
   vector<shared_ptr<Obstacle> > mObstacles;
 };
+
+#endif
