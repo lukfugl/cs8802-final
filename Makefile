@@ -1,5 +1,5 @@
-all: build/main.o build/Environment.o build/Guard.o build/EMSensor.o build/ForwardSensor.o build/NoisyMap.o build/Bond.o
-	g++ -o bond build/main.o build/Environment.o build/Guard.o vendor/jsoncpp/lib/json_writer.o vendor/jsoncpp/lib/json_reader.o vendor/jsoncpp/lib/json_value.o build/EMSensor.o build/ForwardSensor.o build/NoisyMap.o build/Bond.o
+all: build/main.o build/Environment.o build/Guard.o build/EMSensor.o build/ForwardSensor.o build/NoisyMap.o build/Bond.o build/Simulator.o
+	g++ -o bond build/main.o build/Environment.o build/Guard.o vendor/jsoncpp/lib/json_writer.o vendor/jsoncpp/lib/json_reader.o vendor/jsoncpp/lib/json_value.o build/EMSensor.o build/ForwardSensor.o build/NoisyMap.o build/Bond.o build/Simulator.o
 
 build/main.o: src/main.cc
 	g++ -o build/main.o -c src/main.cc
@@ -21,6 +21,9 @@ build/Guard.o: src/Guard.cc src/Guard.h src/Coordinate.h
 
 build/Bond.o: src/Bond.cc src/Bond.h
 	g++ -o build/Bond.o -c src/Bond.cc
+
+build/Simulator.o: src/Simulator.cc src/Simulator.h
+	g++ -o build/Simulator.o -c src/Simulator.cc
 
 test: test/build/Environment test/build/ForwardSensor test/build/EMSensor test/build/NoisyMap test/build/Guard
 	test/build/Environment

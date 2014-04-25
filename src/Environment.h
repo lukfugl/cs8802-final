@@ -22,7 +22,6 @@ class Environment {
   unsigned int spawnTargetZone(double minX, double minY, double maxX, double maxY);
   unsigned int spawnObject(double x, double y, double radius);
   shared_ptr<Guard> spawnGuard(double x, double y, double h, bool ccw=false);
-  shared_ptr<Bond> spawnBond();
 
   unsigned int dropZoneCount();
   unsigned int obstacleCount();

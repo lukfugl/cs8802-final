@@ -12,3 +12,6 @@ Bond::Bond(double x, double y, double heading,
   mForwardSensor(forwardSensor) {}
 
 Bond::~Bond() {}
+
+void Bond::advance() {
+}

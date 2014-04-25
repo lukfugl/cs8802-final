@@ -28,7 +28,7 @@
     { "x": -30, "y":  60, "heading": 0.000000, "ccw": true  },
     { "x":  30, "y":  40, "heading": 3.141592, "ccw": false },
     { "x": -50, "y": -40, "heading": 0.000000, "ccw": false },
-    { "x":  40, "y": -50, "heading": 3.141592, "ccw": true  },
+    { "x":  40, "y": -50, "heading": 3.141592, "ccw": true  }
   ],
 
   // parameters for guard behavior

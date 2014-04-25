@@ -18,6 +18,8 @@ class Bond {
       shared_ptr<ForwardSensor> forwardSensor);
   ~Bond();
 
+  void advance();
+  
   private:
   double mX;
   double mY;
