@@ -1,5 +1,5 @@
-all: build/main.o build/Environment.o build/Guard.o build/Brain.o build/CoupledEMSensor.o build/CoupledForwardSensor.o build/EMSensor.o build/ForwardSensor.o build/NoisyMap.o build/Bond.o build/Simulator.o
-	g++ -o bond build/main.o build/Environment.o build/Guard.o vendor/jsoncpp/lib/json_writer.o vendor/jsoncpp/lib/json_reader.o vendor/jsoncpp/lib/json_value.o build/Brain.o build/CoupledEMSensor.o build/CoupledForwardSensor.o build/EMSensor.o build/ForwardSensor.o build/NoisyMap.o build/Bond.o build/Simulator.o
+all: build/main.o build/Environment.o build/Guard.o build/Brain.o build/CoupledEMSensor.o build/CoupledForwardSensor.o build/EMSensor.o build/ForwardSensor.o build/NoisyMap.o build/Bond.o build/Simulator.o build/ParticleFilter.o
+	g++ -o bond build/main.o build/Environment.o build/Guard.o vendor/jsoncpp/lib/json_writer.o vendor/jsoncpp/lib/json_reader.o vendor/jsoncpp/lib/json_value.o build/Brain.o build/CoupledEMSensor.o build/CoupledForwardSensor.o build/EMSensor.o build/ForwardSensor.o build/NoisyMap.o build/Bond.o build/Simulator.o build/ParticleFilter.o
 
 build/main.o: src/main.cc
 	g++ -o build/main.o -c src/main.cc
@@ -33,6 +33,9 @@ build/Bond.o: src/Bond.cc src/Bond.h
 
 build/Simulator.o: src/Simulator.cc src/Simulator.h
 	g++ -o build/Simulator.o -c src/Simulator.cc
+
+build/ParticleFilter.o: src/ParticleFilter.cc src/ParticleFilter.h
+	g++ -o build/ParticleFilter.o -c src/ParticleFilter.cc
 
 test: test/build/Environment test/build/ForwardSensor test/build/EMSensor test/build/NoisyMap test/build/Guard
 	test/build/Environment

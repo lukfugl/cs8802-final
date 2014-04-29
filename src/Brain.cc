@@ -6,17 +6,43 @@ Brain::Brain(shared_ptr<NoisyMap> map, shared_ptr<CoupledEMSensor> emSensor, sha
   mEMSensor(emSensor),
   mForwardSensor(forwardSensor),
   mOrientation(0, 0, 0),
-  mCalibrated(false) {}
+  mCalibrated(false),
+  mSwarm(new ParticleFilter(map)),
+  mUniform(0, 1) {}
 
 Brain::~Brain() {}
 
 void Brain::decide(double *turn, double *speed) {
-  Observation observation(mEMSensor, 32, mForwardSensor, 32);
+  shared_ptr<Observation> observation(new Observation(mEMSensor, 32, mForwardSensor, 32));
 
-  // TODO: actually choose a turn and speed based on prior state + senses
-  *turn = 0;
-  *speed = 0;
+  // update first
+  if (!mCalibrated) {
+    // continue calibration
+    mSwarm->filter(observation);
+    if (mSwarm->converged()) {
+      mOrientation = mSwarm->mean();
+      mCalibrated = true;
+    }
+  }
+  else {
+    // TODO: update SLAM
+  }
 
-  // update believed heading/location
-  mOrientation.advance(*turn, *speed);
+  // then choose movement
+  if (!mCalibrated) {
+    // just jiggle around
+    *turn = uniform(0, 2 * M_PI);
+    *speed = uniform(0.5, 1.5);
+    mSwarm->advance(*turn, *speed);
+  }
+  else {
+    // TODO: plan
+    *turn = 0;
+    *speed = 0;
+    mOrientation.advance(*turn, *speed);
+  }
+}
+
+double Brain::uniform(double min, double max) {
+  return min + mUniform(mRNG) * (max - min);
 }
