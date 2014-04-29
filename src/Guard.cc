@@ -5,9 +5,8 @@
 
 using namespace std;
 
-Guard::Guard(Coordinate location, double heading, bool ccw) :
-  location(location),
-  heading(heading),
+Guard::Guard(double x, double y, double heading, bool ccw) :
+  orientation(x, y, heading),
   ccw(ccw),
   mSpeedNoiseModel(new NoiseModel),
   mSpeedMean(5),
@@ -18,10 +17,7 @@ void Guard::advance() {
   double step = mSpeedNoiseModel->noisyValue(mSpeedMean);
   double turn = mTurningNoiseModel->noisyValue(mTurningMean);
   if (!ccw) turn *= -1;
-  heading += turn;
-  heading -= 2 * M_PI * floor(heading / (2 * M_PI));
-  location.x += step * cos(heading);
-  location.y += step * sin(heading);
+  orientation.advance(turn, step);
 }
 
 void Guard::setSpeedNoiseModel(shared_ptr<NoiseModel> noiseModel) {
@@ -45,7 +41,7 @@ void Guard::setSightRange(double range) {
 }
 
 bool Guard::detect(shared_ptr<Bond> bond) {
-  double dx = location.x - bond->getX();
-  double dy = location.y - bond->getY();
+  double dx = orientation.x - bond->getX();
+  double dy = orientation.y - bond->getY();
   return sqrt(dx * dx + dy * dy) <= mSightRange;
 }

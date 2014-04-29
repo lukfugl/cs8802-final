@@ -1,4 +1,5 @@
 #include "../src/Environment.h"
+#include "../src/Orientation.h"
 
 int main(int argc, char **argv) {
   Environment env;
@@ -78,11 +79,11 @@ int main(int argc, char **argv) {
 
   for (int i = 0; i < env.guardCount(); i++) {
     shared_ptr<Guard> guard = env.getGuard(i);
-    Coordinate location = guard->location;
-    if (expected[3*i] != location.x || expected[3*i+1] != location.y || expected[3*i+2] != guard->heading) {
+    Orientation orientation = guard->orientation;
+    if (expected[3*i] != orientation.x || expected[3*i+1] != orientation.y || expected[3*i+2] != orientation.heading) {
       printf("\texpected <%f, %f, %f> at %d obstacles, got <%f, %f, %f>\n",
         expected[3*i], expected[3*i+1], expected[3*i+2], i,
-        location.x, location.y, guard->heading);
+        orientation.x, orientation.y, orientation.heading);
     }
   }
 

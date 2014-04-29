@@ -116,7 +116,7 @@ unsigned int Environment::spawnObject(double x, double y, double radius) {
 }
 
 shared_ptr<Guard> Environment::spawnGuard(double x, double y, double h, bool ccw) {
-  shared_ptr<Guard> guard(new Guard(Coordinate(x, y), h, ccw));
+  shared_ptr<Guard> guard(new Guard(x, y, h, ccw));
   mGuards.push_back(guard);
   return guard;
 }

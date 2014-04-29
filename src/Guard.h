@@ -1,8 +1,8 @@
 #ifndef __GUARD_H
 #define __GUARD_H
 
-#include "Coordinate.h"
 #include "NoiseModel.h"
+#include "Orientation.h"
 #include <memory>
 
 using namespace std;
@@ -11,7 +11,7 @@ class Bond;
 
 class Guard {
   public:
-  Guard(Coordinate location, double heading, bool ccw=true);
+  Guard(double x, double y, double heading, bool ccw=true);
 
   void advance();
   void setSpeedNoiseModel(shared_ptr<NoiseModel> noiseModel);
@@ -22,8 +22,7 @@ class Guard {
 
   bool detect(shared_ptr<Bond> bond);
 
-  Coordinate location;
-  double heading;
+  Orientation orientation;
   bool ccw;
 
   private:

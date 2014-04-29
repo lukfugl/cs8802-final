@@ -5,6 +5,7 @@
 #include "NoisyMap.h"
 #include "EMSensor.h"
 #include "ForwardSensor.h"
+#include "Orientation.h"
 
 #include <memory>
 
@@ -22,9 +23,7 @@ class Bond {
   double getHeading();
 
   private:
-  double mX;
-  double mY;
-  double mHeading;
+  Orientation mOrientation;
 };
 
 #endif

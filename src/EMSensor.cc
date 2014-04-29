@@ -1,4 +1,5 @@
 #include "EMSensor.h"
+#include "Orientation.h"
 #include <math.h>
 
 EMSensor::EMSensor(shared_ptr<Environment> environment) :
@@ -12,9 +13,9 @@ unsigned int EMSensor::sense(double at[3], double *readings, unsigned int maxRea
   unsigned int guardCount = mEnvironment->guardCount();
   if (guardCount > maxReadings) guardCount = maxReadings;
   for (int i = 0; i < guardCount; i++) {
-    Coordinate location = mEnvironment->getGuard(i)->location;
-    double dx = location.x - at[0];
-    double dy = location.y - at[1];
+    Orientation orientation = mEnvironment->getGuard(i)->orientation;
+    double dx = orientation.x - at[0];
+    double dy = orientation.y - at[1];
     readings[2*i] = mDistanceNoiseModel->noisyValue(sqrt(dx * dx + dy * dy));
     readings[2*i+1] = mHeadingNoiseModel->noisyValue(atan2(dy, dx));
     if (readings[2*i+1] < 0)

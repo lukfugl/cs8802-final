@@ -3,27 +3,22 @@
 #include <math.h>
 
 Bond::Bond(double x, double y, double heading) :
-  mX(x),
-  mY(y),
-  mHeading(heading) {}
+  mOrientation(x, y, heading) {}
 
 Bond::~Bond() {}
 
 void Bond::advance(double turn, double speed) {
-  mHeading += turn;
-  mHeading -= 2 * M_PI * floor(mHeading / (2 * M_PI));
-  mX += speed * cos(mHeading);
-  mY += speed * sin(mHeading);
+  mOrientation.advance(turn, speed);
 }
 
 double Bond::getX() {
-  return mX;
+  return mOrientation.x;
 }
 
 double Bond::getY() {
-  return mY;
+  return mOrientation.y;
 }
 
 double Bond::getHeading() {
-  return mHeading;
+  return mOrientation.heading;
 }

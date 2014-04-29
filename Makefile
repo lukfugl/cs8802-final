@@ -53,8 +53,8 @@ test/build/EMSensor: test/EMSensor.cc src/Environment.h build/Environment.o buil
 test/build/NoisyMap: test/NoisyMap.cc src/Environment.h build/Environment.o build/NoisyMap.o build/Guard.o test/DeterministicNoise.h build/EMSensor.o build/ForwardSensor.o build/Bond.o
 	g++ -o test/build/NoisyMap test/NoisyMap.cc build/Environment.o build/NoisyMap.o build/Guard.o vendor/jsoncpp/lib/json_writer.o vendor/jsoncpp/lib/json_reader.o vendor/jsoncpp/lib/json_value.o build/EMSensor.o build/ForwardSensor.o build/Bond.o
 
-test/build/Guard: test/Guard.cc src/Guard.h build/Guard.o
-	g++ -o test/build/Guard test/Guard.cc build/Guard.o
+test/build/Guard: test/Guard.cc src/Guard.h build/Guard.o build/Bond.o
+	g++ -o test/build/Guard test/Guard.cc build/Guard.o build/Bond.o
 
 clean:
 	rm -f build/* test/build/* bond

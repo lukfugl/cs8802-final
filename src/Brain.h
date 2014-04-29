@@ -4,6 +4,7 @@
 #include "NoisyMap.h"
 #include "CoupledEMSensor.h"
 #include "CoupledForwardSensor.h"
+#include "Orientation.h"
 
 #include <memory>
 
@@ -22,6 +23,8 @@ class Brain {
   shared_ptr<NoisyMap> mMap;
   shared_ptr<CoupledEMSensor> mEMSensor;
   shared_ptr<CoupledForwardSensor> mForwardSensor;
+  Orientation mOrientation;
+  bool mCalibrated;
 };
 
 #endif
