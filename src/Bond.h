@@ -12,13 +12,10 @@ using namespace std;
 
 class Bond {
   public:
-  Bond(double x, double y, double h,
-      shared_ptr<NoisyMap> map,
-      shared_ptr<EMSensor> emSensor,
-      shared_ptr<ForwardSensor> forwardSensor);
+  Bond(double x, double y, double h);
   ~Bond();
 
-  void advance();
+  void advance(double heading, double speed);
 
   double getX();
   double getY();
@@ -28,9 +25,6 @@ class Bond {
   double mX;
   double mY;
   double mHeading;
-  shared_ptr<NoisyMap> mMap;
-  shared_ptr<EMSensor> mEMSensor;
-  shared_ptr<ForwardSensor> mForwardSensor;
 };
 
 #endif

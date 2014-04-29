@@ -1,19 +1,18 @@
 #include "Bond.h"
 
-Bond::Bond(double x, double y, double heading,
-    shared_ptr<NoisyMap> map,
-    shared_ptr<EMSensor> emSensor,
-    shared_ptr<ForwardSensor> forwardSensor) :
+#include <math.h>
+
+Bond::Bond(double x, double y, double heading) :
   mX(x),
   mY(y),
-  mHeading(heading),
-  mMap(map),
-  mEMSensor(emSensor),
-  mForwardSensor(forwardSensor) {}
+  mHeading(heading) {}
 
 Bond::~Bond() {}
 
-void Bond::advance() {
+void Bond::advance(double heading, double speed) {
+  mHeading = heading - 2 * M_PI * floor(heading / (2 * M_PI));
+  mX += speed * cos(heading);
+  mY += speed * sin(heading);
 }
 
 double Bond::getX() {

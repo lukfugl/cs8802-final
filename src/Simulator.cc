@@ -30,7 +30,9 @@ bool Simulator::goalReached() {
 }
 
 void Simulator::advance() {
-  mBond->advance();
+  double heading = 0, speed = 0;
+  mBrain->decide(&heading, &speed);
+  mBond->advance(heading, speed);
 
   if (goalReached()) {
     // TODO actual goal handling
@@ -63,20 +65,23 @@ void Simulator::spawnBond() {
   double x = uniform_real_distribution<double>(zone.minX, zone.maxX)(rng);
   double y = uniform_real_distribution<double>(zone.minY, zone.maxY)(rng);
   double h = uniform_real_distribution<double>(2 * M_PI)(rng);
-  
+  mBond = shared_ptr<Bond>(new Bond(x, y, h));
+
   shared_ptr<NoiseModel> mapNoise(new NormalNoise(mEnvironment->getMapSigma()));
   shared_ptr<NoiseModel> forwardNoise(new NormalNoise(mEnvironment->getForwardSigma()));
   shared_ptr<NoiseModel> emRangeNoise(new NormalNoise(mEnvironment->getEMRangeSigma()));
   shared_ptr<NoiseModel> emHeadingNoise(new NormalNoise(mEnvironment->getEMHeadingSigma()));
 
   shared_ptr<NoisyMap> map(new NoisyMap(mEnvironment, mapNoise));
-  
-  shared_ptr<EMSensor> emSensor(new EMSensor(mEnvironment));
-  emSensor->setDistanceNoiseModel(emRangeNoise);
-  emSensor->setHeadingNoiseModel(emHeadingNoise);
-  
-  shared_ptr<ForwardSensor> forwardSensor(new ForwardSensor(mEnvironment));
-  forwardSensor->setNoiseModel(forwardNoise);
-  
-  mBond = shared_ptr<Bond>(new Bond(x, y, h, map, emSensor, forwardSensor));
+
+  shared_ptr<EMSensor> rawEMSensor(new EMSensor(mEnvironment));
+  rawEMSensor->setDistanceNoiseModel(emRangeNoise);
+  rawEMSensor->setHeadingNoiseModel(emHeadingNoise);
+  shared_ptr<CoupledEMSensor> emSensor(new CoupledEMSensor(mBond, rawEMSensor));
+
+  shared_ptr<ForwardSensor> rawForwardSensor(new ForwardSensor(mEnvironment));
+  rawForwardSensor->setNoiseModel(forwardNoise);
+  shared_ptr<CoupledForwardSensor> forwardSensor(new CoupledForwardSensor(mBond, rawForwardSensor));
+
+  mBrain = shared_ptr<Brain>(new Brain(map, emSensor, forwardSensor));
 }

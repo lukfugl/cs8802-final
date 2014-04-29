@@ -6,6 +6,7 @@
 
 #include "Environment.h"
 #include "Bond.h"
+#include "Brain.h"
 
 class Simulator {
     public:
@@ -22,6 +23,7 @@ class Simulator {
     bool mTerminated;
     shared_ptr<Environment> mEnvironment;
     shared_ptr<Bond> mBond;
+    shared_ptr<Brain> mBrain;
 };
 
 #endif

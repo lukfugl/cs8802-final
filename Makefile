@@ -1,11 +1,20 @@
-all: build/main.o build/Environment.o build/Guard.o build/EMSensor.o build/ForwardSensor.o build/NoisyMap.o build/Bond.o build/Simulator.o
-	g++ -o bond build/main.o build/Environment.o build/Guard.o vendor/jsoncpp/lib/json_writer.o vendor/jsoncpp/lib/json_reader.o vendor/jsoncpp/lib/json_value.o build/EMSensor.o build/ForwardSensor.o build/NoisyMap.o build/Bond.o build/Simulator.o
+all: build/main.o build/Environment.o build/Guard.o build/Brain.o build/CoupledEMSensor.o build/CoupledForwardSensor.o build/EMSensor.o build/ForwardSensor.o build/NoisyMap.o build/Bond.o build/Simulator.o
+	g++ -o bond build/main.o build/Environment.o build/Guard.o vendor/jsoncpp/lib/json_writer.o vendor/jsoncpp/lib/json_reader.o vendor/jsoncpp/lib/json_value.o build/Brain.o build/CoupledEMSensor.o build/CoupledForwardSensor.o build/EMSensor.o build/ForwardSensor.o build/NoisyMap.o build/Bond.o build/Simulator.o
 
 build/main.o: src/main.cc
 	g++ -o build/main.o -c src/main.cc
 
+build/Brain.o: src/Brain.cc src/Brain.h
+	g++ -o build/Brain.o -c src/Brain.cc
+
 build/Environment.o: src/Environment.cc src/Environment.h src/Coordinate.h src/Guard.h
 	g++ -o build/Environment.o -c src/Environment.cc
+
+build/CoupledForwardSensor.o: src/CoupledForwardSensor.cc src/CoupledForwardSensor.h
+	g++ -o build/CoupledForwardSensor.o -c src/CoupledForwardSensor.cc
+
+build/CoupledEMSensor.o: src/CoupledEMSensor.cc src/CoupledEMSensor.h
+	g++ -o build/CoupledEMSensor.o -c src/CoupledEMSensor.cc
 
 build/ForwardSensor.o: src/ForwardSensor.cc src/ForwardSensor.h src/Environment.h src/Coordinate.h
 	g++ -o build/ForwardSensor.o -c src/ForwardSensor.cc
