@@ -18,16 +18,16 @@ int main(int argc, char **argv) {
 
   double expected[4];
 
-  // should see the drop zone with noise
+  // should see the drop zone without noise
   unsigned int dropZoneCount = map.dropZoneCount();
   if (dropZoneCount != 1) {
     printf("\texpected 1 drop zone, got %d\n", dropZoneCount);
   }
 
-  expected[0] = 0.1;
-  expected[1] = 0.2;
-  expected[2] = 5.3;
-  expected[3] = 5.4;
+  expected[0] = 0.0;
+  expected[1] = 0.0;
+  expected[2] = 5.0;
+  expected[3] = 5.0;
 
   for (int i = 0; i < dropZoneCount; i++) {
     DropZone dropZone = map.getDropZone(i);
@@ -41,11 +41,11 @@ int main(int argc, char **argv) {
     }
   }
 
-  // should see the target zone with noise
-  expected[0] = 35.5;
-  expected[1] = 35.6;
-  expected[2] = 40.7;
-  expected[3] = 40.8;
+  // should see the target zone without noise
+  expected[0] = 35.0;
+  expected[1] = 35.0;
+  expected[2] = 40.0;
+  expected[3] = 40.0;
 
   DropZone targetZone = map.getTargetZone();
   if (fabs(targetZone.minX - expected[0]) > 0.000001 ||
@@ -63,10 +63,10 @@ int main(int argc, char **argv) {
     printf("\texpected 2 obstacles, got %d\n", obstacleCount);
   }
 
-  expected[0] = 10.9;
-  expected[1] = 11.0;
-  expected[2] = 21.1;
-  expected[3] = 31.2;
+  expected[0] = 10.1;
+  expected[1] = 10.2;
+  expected[2] = 20.3;
+  expected[3] = 30.4;
 
   for (int i = 0; i < obstacleCount; i++) {
     shared_ptr<Obstacle> obstacle = map.getObstacle(i);

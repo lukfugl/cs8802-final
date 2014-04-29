@@ -8,20 +8,10 @@ NoisyMap::NoisyMap(shared_ptr<Environment> environment, shared_ptr<NoiseModel> n
   mNoise(noise) {
 
   for (int i = 0; i < mEnvironment->dropZoneCount(); i++) {
-    DropZone sourceDropZone(mEnvironment->getDropZone(i));
-    DropZone noisyDropZone;
-    noisyDropZone.minX = mNoise->noisyValue(sourceDropZone.minX);
-    noisyDropZone.minY = mNoise->noisyValue(sourceDropZone.minY);
-    noisyDropZone.maxX = mNoise->noisyValue(sourceDropZone.maxX);
-    noisyDropZone.maxY = mNoise->noisyValue(sourceDropZone.maxY);
-    mDropZones.push_back(noisyDropZone);
+    mDropZones.push_back(mEnvironment->getDropZone(i));
   }
 
-  DropZone sourceTargetZone(mEnvironment->getTargetZone());
-  mTargetZone.minX = mNoise->noisyValue(sourceTargetZone.minX);
-  mTargetZone.minY = mNoise->noisyValue(sourceTargetZone.minY);
-  mTargetZone.maxX = mNoise->noisyValue(sourceTargetZone.maxX);
-  mTargetZone.maxY = mNoise->noisyValue(sourceTargetZone.maxY);
+  mTargetZone = mEnvironment->getTargetZone();
 
   for (int i = 0; i < mEnvironment->obstacleCount(); i++) {
     shared_ptr<Obstacle> obstacle = mEnvironment->getObstacle(i);
