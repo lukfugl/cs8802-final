@@ -47,18 +47,21 @@ void Environment::loadMap(string filename) {
     spawnObject(x, y, obstacleRadius);
   }
 
+  double guardSightRange;
   if (root.isMember("guardBehavior")) {
     const Json::Value guardBehavior = root["guardBehavior"];
     mGuardSpeedMean = guardBehavior.get("speedMean", 5).asDouble();
     mGuardSpeedSigma = guardBehavior.get("speedSigma", 0).asDouble();
     mGuardTurningMean = guardBehavior.get("turningMean", 0).asDouble();
     mGuardTurningSigma = guardBehavior.get("turningSigma", 0).asDouble();
+    guardSightRange = guardBehavior.get("sightRange", 8).asDouble();
   }
   else {
     mGuardSpeedMean = 5;
     mGuardSpeedSigma = 0;
     mGuardTurningMean = 0;
     mGuardTurningSigma = 0;
+    guardSightRange = 8;
   }
 
   shared_ptr<NoiseModel> speedNoise(new NormalNoise(mGuardSpeedSigma));
@@ -75,6 +78,7 @@ void Environment::loadMap(string filename) {
     guard->setSpeedNoiseModel(speedNoise);
     guard->setTurningMean(mGuardTurningMean);
     guard->setTurningNoiseModel(turningNoise);
+    guard->setSightRange(guardSightRange);
   }
 
   if (root.isMember("informationNoise")) {

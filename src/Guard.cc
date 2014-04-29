@@ -38,3 +38,7 @@ void Guard::setTurningNoiseModel(shared_ptr<NoiseModel> noiseModel) {
 void Guard::setTurningMean(double turning) {
   mTurningMean = turning;
 }
+
+void Guard::setSightRange(double range) {
+  mSightRange = range;
+}

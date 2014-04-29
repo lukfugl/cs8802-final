@@ -16,6 +16,7 @@ class Guard {
   void setSpeedMean(double speed);
   void setTurningNoiseModel(shared_ptr<NoiseModel> noiseModel);
   void setTurningMean(double turning);
+  void setSightRange(double range);
 
   Coordinate location;
   double heading;
@@ -26,6 +27,7 @@ class Guard {
   double mSpeedMean;
   shared_ptr<NoiseModel> mTurningNoiseModel;
   double mTurningMean;
+  double mSightRange;
 };
 
 #endif
