@@ -13,8 +13,8 @@ unsigned int EMSensor::sense(double at[3], double *readings, unsigned int maxRea
   if (guardCount > maxReadings) guardCount = maxReadings;
   for (int i = 0; i < guardCount; i++) {
     Coordinate location = mEnvironment->getGuard(i)->location;
-    double dx = location.x;
-    double dy = location.y;
+    double dx = location.x - at[0];
+    double dy = location.y - at[1];
     readings[2*i] = mDistanceNoiseModel->noisyValue(sqrt(dx * dx + dy * dy));
     readings[2*i+1] = mHeadingNoiseModel->noisyValue(atan2(dy, dx));
     if (readings[2*i+1] < 0)
