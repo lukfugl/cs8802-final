@@ -8,13 +8,12 @@ using namespace std;
 
 class ForwardSensor {
   public:
-  static const unsigned int GRANULARITY;
   static const double NONE;
 
   ForwardSensor(shared_ptr<Environment> environment);
   ~ForwardSensor();
 
-  void sense(double at[3], double *reading);
+  void sense(double at[3], double *reading, unsigned int granularity=10);
   void setNoiseModel(shared_ptr<NoiseModel> noiseModel);
 
   private:

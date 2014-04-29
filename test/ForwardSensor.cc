@@ -7,13 +7,14 @@ int main(int argc, char **argv) {
   shared_ptr<Environment> env(new Environment);
   ForwardSensor sensor(env);
 
+  const unsigned int GRANULARITY = 10;
   double at[3] = { 0.0, 0.0, 0.0 };
-  double reading[ForwardSensor::GRANULARITY];
-  double expected[ForwardSensor::GRANULARITY];
+  double reading[GRANULARITY];
+  double expected[GRANULARITY];
 
   // empty environment, should sense nothing
-  sensor.sense(at, reading);
-  for (int i = 0; i < ForwardSensor::GRANULARITY; i++) {
+  sensor.sense(at, reading, GRANULARITY);
+  for (int i = 0; i < GRANULARITY; i++) {
     if (reading[i] != ForwardSensor::NONE) {
       printf("\texpected blank reading at %d, got %.8f\n", i, reading[i]);
     }
@@ -33,8 +34,8 @@ int main(int argc, char **argv) {
   expected[8] = 8.623518165476579;
   expected[9] = ForwardSensor::NONE;
 
-  sensor.sense(at, reading);
-  for (int i = 0; i < ForwardSensor::GRANULARITY; i++) {
+  sensor.sense(at, reading, GRANULARITY);
+  for (int i = 0; i < GRANULARITY; i++) {
     if (fabs(reading[i] - expected[i]) > 0.000001) {
       printf("%.8f\n", fabs(reading[i] - expected[i]));
       printf("\texpected reading %.6f at %d, got %.8f\n", expected[i], i, reading[i]);
@@ -55,8 +56,8 @@ int main(int argc, char **argv) {
   expected[8] = 6.98157037;
   expected[9] = ForwardSensor::NONE;
 
-  sensor.sense(at, reading);
-  for (int i = 0; i < ForwardSensor::GRANULARITY; i++) {
+  sensor.sense(at, reading, GRANULARITY);
+  for (int i = 0; i < GRANULARITY; i++) {
     if (fabs(reading[i] - expected[i]) > 0.000001) {
       printf("\texpected reading %.6f at %d, got %.8f\n", expected[i], i, reading[i]);
     }
@@ -78,8 +79,8 @@ int main(int argc, char **argv) {
   expected[8] = 8.623518165476579;
   expected[9] = ForwardSensor::NONE;
 
-  sensor.sense(at, reading);
-  for (int i = 0; i < ForwardSensor::GRANULARITY; i++) {
+  sensor.sense(at, reading, GRANULARITY);
+  for (int i = 0; i < GRANULARITY; i++) {
     if (fabs(reading[i] - expected[i]) > 0.000001) {
       printf("\texpected reading %.6f at %d, got %.8f\n", expected[i], i, reading[i]);
     }
@@ -105,8 +106,8 @@ int main(int argc, char **argv) {
   expected[8] = 7.21252908;
   expected[9] = 7.21674416;
 
-  sensor.sense(at, reading);
-  for (int i = 0; i < ForwardSensor::GRANULARITY; i++) {
+  sensor.sense(at, reading, GRANULARITY);
+  for (int i = 0; i < GRANULARITY; i++) {
     if (fabs(reading[i] - expected[i]) > 0.000001) {
       printf("\texpected reading %.6f at %d, got %.8f\n", expected[i], i, reading[i]);
     }
@@ -130,8 +131,8 @@ int main(int argc, char **argv) {
 	expected[8] = 9.00405156;
 	expected[9] = 9.27570219;
 
-  sensor.sense(at, reading);
-  for (int i = 0; i < ForwardSensor::GRANULARITY; i++) {
+  sensor.sense(at, reading, GRANULARITY);
+  for (int i = 0; i < GRANULARITY; i++) {
     if (fabs(reading[i] - expected[i]) > 0.000001) {
       printf("\texpected reading %.6f at %d, got %.8f\n", expected[i], i, reading[i]);
     }
@@ -155,8 +156,8 @@ int main(int argc, char **argv) {
   expected[8] = 9.123518165476579;
   expected[9] = ForwardSensor::NONE;
 
-  sensor.sense(at, reading);
-  for (int i = 0; i < ForwardSensor::GRANULARITY; i++) {
+  sensor.sense(at, reading, GRANULARITY);
+  for (int i = 0; i < GRANULARITY; i++) {
     if (fabs(reading[i] - expected[i]) > 0.000001) {
       printf("\texpected reading %.6f at %d, got %.8f\n", expected[i], i, reading[i]);
     }

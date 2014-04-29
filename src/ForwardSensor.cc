@@ -1,7 +1,6 @@
 #include "ForwardSensor.h"
 #include <math.h>
 
-const unsigned int ForwardSensor::GRANULARITY = 10;
 const double ForwardSensor::NONE = -1.0;
 
 ForwardSensor::ForwardSensor(shared_ptr<Environment> environment) :
@@ -10,12 +9,13 @@ ForwardSensor::ForwardSensor(shared_ptr<Environment> environment) :
 
 ForwardSensor::~ForwardSensor() {}
 
-const double thetaLeft = M_PI / 6;
-const double thetaRight = -thetaLeft;
-const double thetaStep = (thetaRight - thetaLeft) / (ForwardSensor::GRANULARITY - 1);
+const double THETA_LEFT = M_PI / 6;
+const double THETA_RIGHT = -THETA_LEFT;
 
-void ForwardSensor::sense(double at[3], double *reading) {
-  for (int i = 0; i < GRANULARITY; i++)
+void ForwardSensor::sense(double at[3], double *reading, unsigned int granularity) {
+  double thetaStep = (THETA_RIGHT - THETA_LEFT) / (granularity - 1);
+
+  for (int i = 0; i < granularity; i++)
     reading[i] = NONE;
 
   for (int j = 0; j < mEnvironment->obstacleCount(); j++) {
@@ -26,8 +26,8 @@ void ForwardSensor::sense(double at[3], double *reading) {
     double rx = cx - at[0];
     double ry = cy - at[1];
     double cor = rx * rx + ry * ry - r * r;
-    double theta = at[2] + thetaLeft;
-    for (int i = 0; i < GRANULARITY; i++, theta += thetaStep) {
+    double theta = at[2] + THETA_LEFT;
+    for (int i = 0; i < granularity; i++, theta += thetaStep) {
       double dx = cos(theta);
       double dy = sin(theta);
       double dco = dx * rx + dy * ry;
@@ -40,7 +40,7 @@ void ForwardSensor::sense(double at[3], double *reading) {
     }
   }
 
-  for (int i = 0; i < GRANULARITY; i++)
+  for (int i = 0; i < granularity; i++)
     if (reading[i] != NONE)
       reading[i] = mNoiseModel->noisyValue(reading[i]);
 }
