@@ -11,12 +11,13 @@ class Simulator {
     public:
     Simulator(string filename);
     ~Simulator();
-    
+
     bool terminated();
     void advance();
-    
+
     private:
     void spawnBond();
+    bool goalReached();
 
     bool mTerminated;
     shared_ptr<Environment> mEnvironment;

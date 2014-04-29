@@ -19,7 +19,11 @@ class Bond {
   ~Bond();
 
   void advance();
-  
+
+  double getX();
+  double getY();
+  double getHeading();
+
   private:
   double mX;
   double mY;

@@ -1,4 +1,5 @@
 #include "Guard.h"
+#include "Bond.h"
 
 #include <math.h>
 
@@ -41,4 +42,10 @@ void Guard::setTurningMean(double turning) {
 
 void Guard::setSightRange(double range) {
   mSightRange = range;
+}
+
+bool Guard::detect(shared_ptr<Bond> bond) {
+  double dx = location.x - bond->getX();
+  double dy = location.y - bond->getY();
+  return sqrt(dx * dx + dy * dy) <= mSightRange;
 }

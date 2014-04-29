@@ -7,6 +7,8 @@
 
 using namespace std;
 
+class Bond;
+
 class Guard {
   public:
   Guard(Coordinate location, double heading, bool ccw=true);
@@ -17,6 +19,8 @@ class Guard {
   void setTurningNoiseModel(shared_ptr<NoiseModel> noiseModel);
   void setTurningMean(double turning);
   void setSightRange(double range);
+
+  bool detect(shared_ptr<Bond> bond);
 
   Coordinate location;
   double heading;

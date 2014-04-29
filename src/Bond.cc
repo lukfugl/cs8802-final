@@ -15,3 +15,15 @@ Bond::~Bond() {}
 
 void Bond::advance() {
 }
+
+double Bond::getX() {
+  return mX;
+}
+
+double Bond::getY() {
+  return mY;
+}
+
+double Bond::getHeading() {
+  return mHeading;
+}

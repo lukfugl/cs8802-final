@@ -11,17 +11,21 @@ int main(int argc, char **argv) {
 
   string filename(argv[1]);
   Simulator simulator(filename);
-  
+
   int maxIterations = 10;
   if (argc == 3) {
     maxIterations = atoi(argv[2]);
   }
-  
+
   int iterations = 0;
   while (!simulator.terminated() && iterations < maxIterations) {
     simulator.advance();
     iterations++;
   }
-  
+
+  if (!simulator.terminated()) {
+    printf("max iterations exceeded\n");
+  }
+
   return 0;
 }
