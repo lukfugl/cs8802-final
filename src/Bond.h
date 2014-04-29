@@ -15,7 +15,7 @@ class Bond {
   Bond(double x, double y, double h);
   ~Bond();
 
-  void advance(double heading, double speed);
+  void advance(double turn, double speed);
 
   double getX();
   double getY();

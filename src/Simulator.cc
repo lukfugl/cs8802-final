@@ -30,9 +30,9 @@ bool Simulator::goalReached() {
 }
 
 void Simulator::advance() {
-  double heading = 0, speed = 0;
-  mBrain->decide(&heading, &speed);
-  mBond->advance(heading, speed);
+  double turn = 0, speed = 0;
+  mBrain->decide(&turn, &speed);
+  mBond->advance(turn, speed);
 
   if (goalReached()) {
     // TODO actual goal handling

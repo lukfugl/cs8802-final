@@ -9,10 +9,11 @@ Bond::Bond(double x, double y, double heading) :
 
 Bond::~Bond() {}
 
-void Bond::advance(double heading, double speed) {
-  mHeading = heading - 2 * M_PI * floor(heading / (2 * M_PI));
-  mX += speed * cos(heading);
-  mY += speed * sin(heading);
+void Bond::advance(double turn, double speed) {
+  mHeading += turn;
+  mHeading -= 2 * M_PI * floor(mHeading / (2 * M_PI));
+  mX += speed * cos(mHeading);
+  mY += speed * sin(mHeading);
 }
 
 double Bond::getX() {

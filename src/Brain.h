@@ -16,7 +16,7 @@ class Brain {
       shared_ptr<CoupledForwardSensor> forwardSensor);
   ~Brain();
 
-  void decide(double *heading, double *speed);
+  void decide(double *turn, double *speed);
 
   private:
   shared_ptr<NoisyMap> mMap;
