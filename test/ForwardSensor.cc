@@ -5,7 +5,8 @@
 
 int main(int argc, char **argv) {
   shared_ptr<Environment> env(new Environment);
-  ForwardSensor sensor(env);
+  shared_ptr<NoisyMap> map(new NoisyMap(env));
+  ForwardSensor sensor(map);
 
   const unsigned int GRANULARITY = 10;
   double at[3] = { 0.0, 0.0, 0.0 };
@@ -22,6 +23,7 @@ int main(int argc, char **argv) {
 
   // non-empty environment, should sense object
   env->spawnObject(10.0, 0.0, 4.0);
+  map->refresh();
 
   expected[0] = ForwardSensor::NONE;
   expected[1] = 8.623518165476579;
@@ -88,6 +90,7 @@ int main(int argc, char **argv) {
 
   // two objects, should sense both
   env->spawnObject(20.0, 0.0, 4.0);
+  map->refresh();
 
   at[0] = 15.0;
   at[1] = 10.0;

@@ -72,16 +72,17 @@ void Simulator::spawnBond() {
   shared_ptr<NoiseModel> emRangeNoise(new NormalNoise(mEnvironment->getEMRangeSigma()));
   shared_ptr<NoiseModel> emHeadingNoise(new NormalNoise(mEnvironment->getEMHeadingSigma()));
 
-  shared_ptr<NoisyMap> map(new NoisyMap(mEnvironment, mapNoise));
+  shared_ptr<NoisyMap> trueMap(new NoisyMap(mEnvironment));
+  shared_ptr<NoisyMap> noisyMap(new NoisyMap(mEnvironment, mapNoise));
 
   shared_ptr<EMSensor> rawEMSensor(new EMSensor(mEnvironment));
   rawEMSensor->setDistanceNoiseModel(emRangeNoise);
   rawEMSensor->setHeadingNoiseModel(emHeadingNoise);
   shared_ptr<CoupledEMSensor> emSensor(new CoupledEMSensor(mBond, rawEMSensor));
 
-  shared_ptr<ForwardSensor> rawForwardSensor(new ForwardSensor(mEnvironment));
+  shared_ptr<ForwardSensor> rawForwardSensor(new ForwardSensor(trueMap));
   rawForwardSensor->setNoiseModel(forwardNoise);
   shared_ptr<CoupledForwardSensor> forwardSensor(new CoupledForwardSensor(mBond, rawForwardSensor));
 
-  mBrain = shared_ptr<Brain>(new Brain(map, emSensor, forwardSensor));
+  mBrain = shared_ptr<Brain>(new Brain(noisyMap, emSensor, forwardSensor));
 }

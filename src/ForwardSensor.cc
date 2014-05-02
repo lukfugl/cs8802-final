@@ -3,8 +3,8 @@
 
 const double ForwardSensor::NONE = -1.0;
 
-ForwardSensor::ForwardSensor(shared_ptr<Environment> environment) :
-  mEnvironment(environment),
+ForwardSensor::ForwardSensor(shared_ptr<NoisyMap> map) :
+  mMap(map),
   mNoiseModel(new NoiseModel) {}
 
 ForwardSensor::~ForwardSensor() {}
@@ -18,8 +18,8 @@ void ForwardSensor::sense(double at[3], double *reading, unsigned int granularit
   for (int i = 0; i < granularity; i++)
     reading[i] = NONE;
 
-  for (int j = 0; j < mEnvironment->obstacleCount(); j++) {
-    shared_ptr<Obstacle> obstacle = mEnvironment->getObstacle(j);
+  for (int j = 0; j < mMap->obstacleCount(); j++) {
+    shared_ptr<Obstacle> obstacle = mMap->getObstacle(j);
     double r = obstacle->radius;
     double cx = obstacle->location.x;
     double cy = obstacle->location.y;
