@@ -43,6 +43,15 @@ void Brain::decide(double *turn, double *speed) {
   }
 }
 
+Orientation Brain::believedOrientation() {
+  if (mCalibrated) {
+    return mOrientation;
+  }
+  else {
+    return mSwarm->mean();
+  }
+}
+
 double Brain::uniform(double min, double max) {
   return min + mUniform(mRNG) * (max - min);
 }

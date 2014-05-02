@@ -20,6 +20,7 @@ class Brain {
   ~Brain();
 
   void decide(double *turn, double *speed);
+  Orientation believedOrientation();
 
   private:
   double uniform(double min, double max);
