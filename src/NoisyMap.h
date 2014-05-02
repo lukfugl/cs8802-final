@@ -4,15 +4,17 @@
 #include "Environment.h"
 #include "NoiseModel.h"
 
-#include <vector>
+#include <memory>
 
 class NoisyMap {
   public:
+  NoisyMap(shared_ptr<Environment> environment);
   NoisyMap(shared_ptr<Environment> environment, shared_ptr<NoiseModel> noise);
 
   unsigned int dropZoneCount();
   unsigned int obstacleCount();
 
+  void refresh();
   DropZone getDropZone(unsigned int index);
   DropZone getTargetZone();
   shared_ptr<Obstacle> getObstacle(unsigned int index);

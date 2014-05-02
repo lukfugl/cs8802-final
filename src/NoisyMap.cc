@@ -3,9 +3,21 @@
 
 using namespace std;
 
+NoisyMap::NoisyMap(shared_ptr<Environment> environment) :
+  mEnvironment(environment),
+  mNoise(new NoiseModel) {
+  refresh();
+}
+
 NoisyMap::NoisyMap(shared_ptr<Environment> environment, shared_ptr<NoiseModel> noise) :
   mEnvironment(environment),
   mNoise(noise) {
+  refresh();
+}
+
+void NoisyMap::refresh() {
+  mDropZones.clear();
+  mObstacles.clear();
 
   for (int i = 0; i < mEnvironment->dropZoneCount(); i++) {
     mDropZones.push_back(mEnvironment->getDropZone(i));
