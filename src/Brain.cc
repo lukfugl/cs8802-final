@@ -7,7 +7,7 @@ Brain::Brain(shared_ptr<NoisyMap> map, shared_ptr<CoupledEMSensor> emSensor, sha
   mForwardSensor(forwardSensor),
   mOrientation(0, 0, 0),
   mCalibrated(false),
-  mSwarm(new ParticleFilter(map)),
+  mSwarm(new ParticleFilter(map, 500)),
   mUniform(0, 1) {}
 
 Brain::~Brain() {}

@@ -3,14 +3,16 @@
 
 #include "NoisyMap.h"
 #include "Observation.h"
+#include "Orientation.h"
 
 #include <memory>
+#include <random>
 
 using namespace std;
 
 class ParticleFilter {
   public:
-  ParticleFilter(shared_ptr<NoisyMap> map);
+  ParticleFilter(shared_ptr<NoisyMap> map, unsigned int particleCount);
   ~ParticleFilter();
 
   void advance(double turn, double speed);
@@ -19,7 +21,13 @@ class ParticleFilter {
   Orientation mean();
 
   private:
+  double uniform(double min, double max);
+  double headingDistance(double heading, double targetHeading);
+
   shared_ptr<NoisyMap> mMap;
+  vector<Orientation> mParticles;
+  default_random_engine mRNG;
+  uniform_real_distribution<double> mUniform;
 };
 
 #endif
