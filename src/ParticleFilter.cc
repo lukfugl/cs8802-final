@@ -84,7 +84,7 @@ bool ParticleFilter::converged() {
   variance.x /= mParticles.size();
   variance.y /= mParticles.size();
   variance.heading /= mParticles.size();
-  return (variance.x + variance.y) < 20 && variance.heading < M_PI / 4;
+  return (variance.x + variance.y) < 5 && variance.heading < M_PI / 12;
 }
 
 double ParticleFilter::headingDistance(double heading, double targetHeading) {
