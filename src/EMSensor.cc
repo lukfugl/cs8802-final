@@ -16,10 +16,13 @@ unsigned int EMSensor::sense(double at[3], double *readings, unsigned int maxRea
     Orientation orientation = mEnvironment->getGuard(i)->orientation;
     double dx = orientation.x - at[0];
     double dy = orientation.y - at[1];
+
     readings[2*i] = mDistanceNoiseModel->noisyValue(sqrt(dx * dx + dy * dy));
-    readings[2*i+1] = mHeadingNoiseModel->noisyValue(atan2(dy, dx));
-    if (readings[2*i+1] < 0)
+    readings[2*i+1] = mHeadingNoiseModel->noisyValue(atan2(dy, dx) - at[2]);
+    while (readings[2*i+1] < 0)
       readings[2*i+1] += 2 * M_PI;
+    while (readings[2*i+1] > 2 * M_PI)
+      readings[2*i+1] -= 2 * M_PI;
   }
   return guardCount;
 }
