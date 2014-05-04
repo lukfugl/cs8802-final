@@ -18,6 +18,7 @@ void Guard::advance() {
   double turn = mTurningNoiseModel->noisyValue(mTurningMean);
   if (!ccw) turn *= -1;
   orientation.advance(turn, step);
+  printf("new guard position: %.3f, %.3f\n", orientation.x, orientation.y);
 }
 
 void Guard::setSpeedNoiseModel(shared_ptr<NoiseModel> noiseModel) {

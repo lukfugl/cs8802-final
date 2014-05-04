@@ -6,6 +6,7 @@
 #include "CoupledForwardSensor.h"
 #include "Orientation.h"
 #include "ParticleFilter.h"
+#include "GuardModel.h"
 
 #include <memory>
 #include <random>
@@ -31,6 +32,7 @@ class Brain {
   Orientation mOrientation;
   bool mCalibrated;
   shared_ptr<ParticleFilter> mSwarm;
+  shared_ptr<GuardModel> mGuardModel;
   default_random_engine mRNG;
   uniform_real_distribution<double> mUniform;
 };
