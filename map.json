@@ -55,6 +55,6 @@
     "mapSigma": 5, // noise in map
     "forwardSigma": 2, // noise in forward range finder
     "emRangeSigma": 2, // noise in EM-sensor range
-    "emHeadingSigma": 0.2 // noise in EM-sensor heading
+    "emHeadingSigma": 0.05 // noise in EM-sensor heading
   }
 }
