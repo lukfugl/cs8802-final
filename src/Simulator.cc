@@ -34,9 +34,10 @@ void Simulator::advance() {
   mBrain->decide(&turn, &speed);
   mBond->advance(turn, speed);
   Orientation estimate = mBrain->believedOrientation();
-  printf("true/estimate: <%.3f, %.3f | %.3f> / <%.3f, %.3f | %.3f>\n",
+  printf("true/estimate/error: <%.3f, %.3f | %.3f> / <%.3f, %.3f | %.3f> / <%.3f, %.3f | %.3f>\n",
       mBond->getX(), mBond->getY(), mBond->getHeading(),
-      estimate.x, estimate.y, estimate.heading);
+      estimate.x, estimate.y, estimate.heading,
+      estimate.x - mBond->getX(), estimate.y - mBond->getY(), estimate.heading - mBond->getHeading());
 
   if (goalReached()) {
     // TODO actual goal handling
