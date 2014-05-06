@@ -1,7 +1,7 @@
 GCC=g++ -std=c++11
 
-all: build/main.o build/Environment.o build/Guard.o build/Brain.o build/CoupledEMSensor.o build/CoupledForwardSensor.o build/EMSensor.o build/ForwardSensor.o build/NoisyMap.o build/Bond.o build/Simulator.o build/ParticleFilter.o build/GuardModel.o
-	$(GCC) -o bond build/main.o build/Environment.o build/Guard.o vendor/jsoncpp/lib/json_writer.o vendor/jsoncpp/lib/json_reader.o vendor/jsoncpp/lib/json_value.o build/Brain.o build/CoupledEMSensor.o build/CoupledForwardSensor.o build/EMSensor.o build/ForwardSensor.o build/NoisyMap.o build/Bond.o build/Simulator.o build/ParticleFilter.o build/GuardModel.o
+all: build/main.o build/Environment.o build/Guard.o build/Brain.o build/CoupledEMSensor.o build/CoupledForwardSensor.o build/EMSensor.o build/ForwardSensor.o build/NoisyMap.o build/Bond.o build/Simulator.o build/ParticleFilter.o build/GuardModel.o build/OnlineSLAM.o
+	$(GCC) -o bond build/main.o build/Environment.o build/Guard.o vendor/jsoncpp/lib/json_writer.o vendor/jsoncpp/lib/json_reader.o vendor/jsoncpp/lib/json_value.o build/Brain.o build/CoupledEMSensor.o build/CoupledForwardSensor.o build/EMSensor.o build/ForwardSensor.o build/NoisyMap.o build/Bond.o build/Simulator.o build/ParticleFilter.o build/GuardModel.o build/OnlineSLAM.o
 
 build/main.o: src/main.cc
 	$(GCC) -o build/main.o -c src/main.cc
@@ -41,6 +41,9 @@ build/ParticleFilter.o: src/ParticleFilter.cc src/ParticleFilter.h
 
 build/GuardModel.o: src/GuardModel.cc src/GuardModel.h
 	$(GCC) -o build/GuardModel.o -c src/GuardModel.cc
+
+build/OnlineSLAM.o: src/OnlineSLAM.cc src/OnlineSLAM.h
+	$(GCC) -o build/OnlineSLAM.o -c src/OnlineSLAM.cc
 
 test: test/build/Environment test/build/ForwardSensor test/build/EMSensor test/build/NoisyMap test/build/Guard
 	test/build/Environment

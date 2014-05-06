@@ -5,9 +5,9 @@ Brain::Brain(shared_ptr<NoisyMap> map, shared_ptr<CoupledEMSensor> emSensor, sha
   mMap(map),
   mEMSensor(emSensor),
   mForwardSensor(forwardSensor),
-  mOrientation(0, 0, 0),
   mCalibrated(false),
   mSwarm(new ParticleFilter(map, 500)),
+  mSlam(NULL),
   mGuardModel(new GuardModel()),
   mUniform(0, 1) {}
 
@@ -22,12 +22,12 @@ void Brain::decide(double *turn, double *speed) {
     // continue calibration
     mSwarm->filter(observation);
     if (mSwarm->converged()) {
-      mOrientation = mSwarm->mean();
+      mSlam = shared_ptr<OnlineSLAM>(new OnlineSLAM(mSwarm->mean(), mSwarm->variance().heading, mMap));
       mCalibrated = true;
     }
   }
   else {
-    // TODO: update SLAM
+    mSlam->update(observation);
   }
 
   // predict guard motion. priorBelief and currentBelief are used to correct
@@ -42,21 +42,21 @@ void Brain::decide(double *turn, double *speed) {
   // then choose movement
   if (!mCalibrated) {
     // just jiggle around
-    *turn = uniform(0, 2 * M_PI);
-    *speed = uniform(0.5, 1.5);
+    *turn = uniform(0, M_PI / 2);
+    *speed = uniform(0.5, 1.0);
     mSwarm->advance(*turn, *speed);
   }
   else {
     // TODO: plan
-    *turn = 0;
-    *speed = 0;
-    mOrientation.advance(*turn, *speed);
+    *turn = uniform(0, M_PI / 6);
+    *speed = uniform(0.5, 1.0);
+    mSlam->advance(*turn, *speed);
   }
 }
 
 Orientation Brain::believedOrientation() {
   if (mCalibrated) {
-    return mOrientation;
+    return mSlam->estimate();
   }
   else {
     return mSwarm->mean();

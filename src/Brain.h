@@ -6,6 +6,7 @@
 #include "CoupledForwardSensor.h"
 #include "Orientation.h"
 #include "ParticleFilter.h"
+#include "OnlineSLAM.h"
 #include "GuardModel.h"
 
 #include <memory>
@@ -29,9 +30,9 @@ class Brain {
   shared_ptr<NoisyMap> mMap;
   shared_ptr<CoupledEMSensor> mEMSensor;
   shared_ptr<CoupledForwardSensor> mForwardSensor;
-  Orientation mOrientation;
   bool mCalibrated;
   shared_ptr<ParticleFilter> mSwarm;
+  shared_ptr<OnlineSLAM> mSlam;
   shared_ptr<GuardModel> mGuardModel;
   default_random_engine mRNG;
   uniform_real_distribution<double> mUniform;
