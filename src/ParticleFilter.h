@@ -19,6 +19,7 @@ class ParticleFilter {
   void filter(shared_ptr<Observation> observation);
   bool converged();
   Orientation mean();
+  Orientation variance();
 
   private:
   double uniform(double min, double max);

@@ -66,25 +66,11 @@ void ParticleFilter::filter(shared_ptr<Observation> observation) {
   }
 
   mParticles = resampled;
-
-  Orientation m = mean();
 }
 
 bool ParticleFilter::converged() {
-  // "good enough" convergence: sum of squared errors (from the mean)
-  // in position is less than 10 (arbitrary, will be tweaked) and sum of
-  // squared errors in heading is less than π/4 (ditto), simultaneously
-  Orientation mu = mean();
-  Orientation variance(0, 0, 0);
-  for (vector<Orientation>::iterator i = mParticles.begin(), e = mParticles.end(); i != e; ++i) {
-    variance.x += pow(i->x - mu.x, 2);
-    variance.y += pow(i->y - mu.y, 2);
-    variance.heading += pow(headingDistance(i->heading, mu.heading), 2);
-  }
-  variance.x /= mParticles.size();
-  variance.y /= mParticles.size();
-  variance.heading /= mParticles.size();
-  return (variance.x + variance.y) < 5 && variance.heading < M_PI / 12;
+  Orientation var = variance();
+  return (var.x + var.y) < 1 && var.heading < M_PI / 24;
 }
 
 double ParticleFilter::headingDistance(double heading, double targetHeading) {
@@ -107,6 +93,20 @@ Orientation ParticleFilter::mean() {
   mean.heading /= mParticles.size();
   mean.heading += anchorHeading;
   return mean;
+}
+
+Orientation ParticleFilter::variance() {
+  Orientation mu = mean();
+  Orientation variance(0, 0, 0);
+  for (vector<Orientation>::iterator i = mParticles.begin(), e = mParticles.end(); i != e; ++i) {
+    variance.x += pow(i->x - mu.x, 2);
+    variance.y += pow(i->y - mu.y, 2);
+    variance.heading += pow(headingDistance(i->heading, mu.heading), 2);
+  }
+  variance.x /= mParticles.size();
+  variance.y /= mParticles.size();
+  variance.heading /= mParticles.size();
+  return variance;
 }
 
 double ParticleFilter::uniform(double min, double max) {
