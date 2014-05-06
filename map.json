@@ -18,10 +18,9 @@
     { "x":  90, "y":  -30 },
     { "x":   0, "y":  -50 },
     { "x":  60, "y":  -70 },
-    { "x":  60, "y":  -70 },
     { "x": -40, "y": -100 }
   ],
-  "obstacleRadius": 20,
+  "obstacleRadius": 10,
 
   // initial guard locations and headings
   "guards": [
