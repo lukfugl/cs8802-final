@@ -31,6 +31,7 @@ void ForwardSensor::sense(double at[3], double *reading, unsigned int granularit
       double dx = cos(theta);
       double dy = sin(theta);
       double dco = dx * rx + dy * ry;
+      if (dco < 0) continue;
       double discriminant = dco * dco - cor;
       if (discriminant > 0) {
         double distance = dco - sqrt(discriminant);
