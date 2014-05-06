@@ -9,7 +9,8 @@
 
 Simulator::Simulator(string filename) :
   mEnvironment(new Environment),
-  mTerminated(false)
+  mTerminated(false),
+  mSuccess(false)
 {
   mEnvironment->loadMap(filename);
   spawnBond();
@@ -19,6 +20,10 @@ Simulator::~Simulator() {}
 
 bool Simulator::terminated() {
   return mTerminated;
+}
+
+bool Simulator::success() {
+  return mSuccess;
 }
 
 bool Simulator::goalReached() {
@@ -32,6 +37,31 @@ bool Simulator::goalReached() {
 void Simulator::advance() {
   double turn = 0, speed = 0;
   mBrain->decide(&turn, &speed);
+
+  double bx = mBond->getX();
+  double by = mBond->getY();
+  double theta = mBond->getHeading() + turn;
+  double dx = cos(theta);
+  double dy = sin(theta);
+  for (int j = 0; j < mEnvironment->obstacleCount(); j++) {
+    shared_ptr<Obstacle> obstacle = mEnvironment->getObstacle(j);
+    double rx = obstacle->location.x - bx;
+    double ry = obstacle->location.y - by;
+    double dco = dx * rx + dy * ry;
+    if (dco <= 0) continue; // obstacle behind bond
+
+    double cor = rx * rx + ry * ry + speed * speed - obstacle->radius * obstacle->radius;
+    if (2 * dco * speed < cor) continue; // missed
+
+    // collided; move to spot of collision and terminate (don't return early;
+    // guard might detect too!)
+    speed = cor / (2 * dco);
+    printf("collided!\n");
+    mTerminated = true;
+    mSuccess = false;
+    break;
+  }
+
   mBond->advance(turn, speed);
   Orientation estimate = mBrain->believedOrientation();
   printf("true/estimate/error: <%.3f, %.3f | %.3f> / <%.3f, %.3f | %.3f> / <%.3f, %.3f | %.3f>\n",
@@ -40,9 +70,9 @@ void Simulator::advance() {
       estimate.x - mBond->getX(), estimate.y - mBond->getY(), estimate.heading - mBond->getHeading());
 
   if (goalReached()) {
-    // TODO actual goal handling
     printf("reached goal!\n");
     mTerminated = true;
+    mSuccess = true;
     return;
   }
 
@@ -55,9 +85,9 @@ void Simulator::advance() {
   }
 
   if (detected) {
-    // TODO actual detection handling
     printf("detected!\n");
     mTerminated = true;
+    mSuccess = false;
   }
 }
 

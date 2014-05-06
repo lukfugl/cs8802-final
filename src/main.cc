@@ -25,7 +25,8 @@ int main(int argc, char **argv) {
 
   if (!simulator.terminated()) {
     printf("max iterations exceeded\n");
+    return -1;
   }
 
-  return 0;
+  return (simulator.success() ? 0 : -1);
 }

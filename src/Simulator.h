@@ -14,6 +14,7 @@ class Simulator {
     ~Simulator();
 
     bool terminated();
+    bool success();
     void advance();
 
     private:
@@ -21,6 +22,7 @@ class Simulator {
     bool goalReached();
 
     bool mTerminated;
+    bool mSuccess;
     shared_ptr<Environment> mEnvironment;
     shared_ptr<Bond> mBond;
     shared_ptr<Brain> mBrain;
