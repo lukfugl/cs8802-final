@@ -44,8 +44,8 @@
     // sigma of angle turned in each time step
     "turningSigma": 0.05,
 
-    // sigma of angle turned in each time step
-    "sightRange": 8.0
+    // how far away the guards can sense bond
+    "sightRange": 15.0
   },
 
   // sigmas for 0-mean noise distributions for robot information (map and
