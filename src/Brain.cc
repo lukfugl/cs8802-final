@@ -16,8 +16,10 @@ Brain::~Brain() {}
 void Brain::decide(double *turn, double *speed) {
   shared_ptr<Observation> observation(new Observation(mEMSensor, 32, mForwardSensor, 32));
 
-  // update first
   Orientation priorBelief = believedOrientation();
+  printf("\t%.6f\t%.6f\t%.6f", priorBelief.x, priorBelief.y, priorBelief.heading); // estimated bond position pre-update
+
+  // update first
   if (!mCalibrated) {
     // continue calibration
     mSwarm->filter(observation);
@@ -30,13 +32,20 @@ void Brain::decide(double *turn, double *speed) {
     mSlam->update(observation);
   }
 
+  Orientation currentBelief = believedOrientation();
+  printf("\t%.6f\t%.6f\t%.6f", currentBelief.x, currentBelief.y, currentBelief.heading); // estimated bond position post-update
+
+  for (int i = 0; i < mMap->obstacleCount(); i++) {
+    shared_ptr<Obstacle> obstacle = mMap->getObstacle(i);
+    printf("\t%.6f\t%.6f", obstacle->location.x, obstacle->location.y); // estimated obstacle location
+  }
+
   // predict guard motion. priorBelief and currentBelief are used to correct
   // beliefs before update: i.e. if I though a guard was at X when I thought I
   // was at priorBelief, I should now think the guard is at X' = f(X,
   // priorBelief, currentBelief) given I think I'm at currentBelief. also,
   // currentBelief is used to interpret the ranges and bearings from the
   // observation into positions
-  Orientation currentBelief = believedOrientation();
   mGuardModel->update(observation, priorBelief, currentBelief);
 
   // then choose movement

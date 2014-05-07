@@ -48,8 +48,6 @@ OnlineSLAM::OnlineSLAM(Orientation orientation, double headingVariance, shared_p
   }
 
   mMu = ublas::prod(inverse(mOmega), mXi);
-  printf("mu: %.3f, %.3f; %.3f, %.3f; %.3f, %.3f; %.3f, %.3f; ...\n",
-      mMu(0), mMu(1), mMu(10), mMu(11), mMu(16), mMu(17), mMu(20), mMu(21));
 }
 
 OnlineSLAM::~OnlineSLAM() {}
@@ -204,8 +202,6 @@ map<int, ublas::vector<double> > OnlineSLAM::processObservation(shared_ptr<Obser
 void OnlineSLAM::refineModel(shared_ptr<Observation> observation) {
   // estimate
   mMu = ublas::prod(inverse(mOmega), mXi);
-  printf("mu: %.3f, %.3f; %.3f, %.3f; %.3f, %.3f; %.3f, %.3f; ...\n",
-      mMu(0), mMu(1), mMu(10), mMu(11), mMu(16), mMu(17), mMu(20), mMu(21));
 
   // update orientation
   mOrientation.x = mMu(0);

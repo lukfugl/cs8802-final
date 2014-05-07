@@ -35,12 +35,19 @@ bool Simulator::goalReached() {
 }
 
 void Simulator::advance() {
+  printf("\t%.6f\t%.6f\t%.6f", mBond->getX(), mBond->getY(), mBond->getHeading()); // true bond position
+  for (int i = 0; i < mEnvironment->guardCount(); i++) {
+    shared_ptr<Guard> guard = mEnvironment->getGuard(i);
+    printf("\t%.6f\t%.6f", guard->orientation.x, guard->orientation.y); // true guard position
+  }
+
   double turn = 0, speed = 0;
   mBrain->decide(&turn, &speed);
 
   double bx = mBond->getX();
   double by = mBond->getY();
   double theta = mBond->getHeading() + turn;
+
   double dx = cos(theta);
   double dy = sin(theta);
   for (int j = 0; j < mEnvironment->obstacleCount(); j++) {
@@ -63,11 +70,6 @@ void Simulator::advance() {
   }
 
   mBond->advance(turn, speed);
-  Orientation estimate = mBrain->believedOrientation();
-  printf("true/estimate/error: <%.3f, %.3f | %.3f> / <%.3f, %.3f | %.3f> / <%.3f, %.3f | %.3f>\n",
-      mBond->getX(), mBond->getY(), mBond->getHeading(),
-      estimate.x, estimate.y, estimate.heading,
-      estimate.x - mBond->getX(), estimate.y - mBond->getY(), estimate.heading - mBond->getHeading());
 
   if (goalReached()) {
     printf("reached goal!\n");

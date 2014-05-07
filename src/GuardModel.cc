@@ -108,7 +108,6 @@ void KalmanFilter::update(Orientation observation) {
   ublas::matrix<double> K0 = ublas::prod(ublas::trans(H), inverse(S));
   ublas::matrix<double> K = ublas::prod(P, K0);
   X += ublas::prod(K, y);
-  printf("new guard estimate: %.3f, %.3f\n", X(0), X(1));
   P = ublas::prod((I - ublas::prod(K, H)), P);
 
   // prediction
@@ -220,9 +219,15 @@ void GuardModel::update(shared_ptr<Observation> observation, Orientation priorAn
     for (int i = 0; i < observation->emReadingCount; i++) {
       Orientation actual = extrapolate(currentAnchor, observation->emReadings[2*i], observation->emReadings[2*i+1]);
       mGuards.push_back(shared_ptr<KalmanFilter>(new KalmanFilter(actual)));
+      printf("\t%.6f\t%.6f", 0.0, 0.0); // predicted guard position
     }
   }
   else {
+    for (int i = 0; i < mGuards.size(); i++) {
+      Orientation prediction = mGuards.at(i)->prediction();
+      printf("\t%.6f\t%.6f", prediction.x, prediction.y); // predicted guard position
+    }
+
     vector<Orientation> predictions;
     vector<Orientation> observations;
     for (int i = 0; i < observation->emReadingCount; i++) {
